@@ -1,0 +1,21 @@
+#include "SceneManager.h"
+
+SceneManager::SceneManager(Vector2u size)
+    :size(size)
+{
+}
+
+void SceneManager::MoveScene(SceneTypes type, vector<int> sceneInfo)
+{
+}
+
+const Vector2u SceneManager::GetSize() const
+{
+    return;
+}
+
+Window& SceneManager::GetWindow()
+{
+    return window;
+    // TODO: 여기에 return 문을 삽입합니다.
+}
