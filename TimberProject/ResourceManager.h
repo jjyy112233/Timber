@@ -25,7 +25,7 @@ public:
 	ResourceManager();
 	~ResourceManager();
 	
-	bool LadAll();
+	bool LoadAll();
 	bool LoadTexture(string id);
 	bool LoadFont(string id);
 	bool LoadSoundBuffer(string id);

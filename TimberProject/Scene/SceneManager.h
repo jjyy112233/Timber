@@ -3,6 +3,7 @@
 #include "MenuScene.h"
 #include "SingleScene.h"
 #include "DualScene.h"
+
 class SceneManager
 {
 protected:
