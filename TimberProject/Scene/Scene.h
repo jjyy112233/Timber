@@ -24,6 +24,8 @@ protected:
 	SceneManager& mgr;
 	Vector2u size;
 	RenderWindow& window;
+	list<SpriteObject*> objs;
+	list<UiObject*> uis;
 public:
 	Scene(SceneManager& mgr);
 	virtual void Init() = 0;

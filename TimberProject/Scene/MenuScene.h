@@ -22,8 +22,6 @@ protected:
 	Select nowSelect;
 	vector<int> clothes;
 
-	list<SpriteObject*> objs;
-	list<UiObject*> uis;
 public:
 	MenuScene(SceneManager& mgr);
 	virtual void Init();

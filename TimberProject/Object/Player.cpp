@@ -1,12 +1,20 @@
 #include "Player.h"
+#include "../ResourceManager.h"
 
 Player::Player(Texture& tex, vector<Branch*>& branch)
-	:SpriteObject(tex), branch(branch), addScore(100), isAlive(true), side(Sides::Left)
+	:SpriteObject(tex),
+	branch(branch), addScore(100), isAlive(true), side(Sides::Left)
 {
+	Rip = *ResourceManager::GetInstance()->GetTexture("graphics/rip.png");
+	axe.setTexture(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png"));
+	ripSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
+	SetOrigin(Origins::MR);
+//	axe.setOrigin(Origins::MR);
 }
 
 void Player::Set(int clothIdx, Vector2f tree)
 {
+
 }
 
 void Player::Init()

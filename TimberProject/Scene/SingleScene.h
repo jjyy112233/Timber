@@ -13,9 +13,6 @@ protected:
 	Player player;
 	vector<Branch*> branchs; //가지들은 오브젝트풀로, 가지가 사운드 가지고 있게 하자
 	
-	list<SpriteObject*> objs; //오브젝트들 동적할당으로 만들어서 저장
-	list<UiObject*> uis;      //ui들 동적할당으로 만들어서 저장
-
 	Sprite tree;
 	Sprite Timer;
 	Text pushEnter;

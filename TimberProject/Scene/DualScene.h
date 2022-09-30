@@ -13,9 +13,6 @@ class DualScene : public Scene
 	vector<vector<Branch*>*> branchs; //가지들은 오브젝트풀로, 가지가 사운드 가지고 있게 하자
 	vector<Player> players;	//플렝이어 두개
 
-	list<SpriteObject*> objs;
-	list<UiObject*> uis;
-
 	vector<SpriteObject*> timer; //타이머 두개
 	UiObject* pushEnter;//두개
 	UiObject* gameOver;	//두개

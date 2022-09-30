@@ -13,5 +13,5 @@ public:
 
 	void MoveScene(SceneTypes type, vector<int> sceneInfo = vector<int>());
 	const Vector2u GetSize() const;
-	Window& GetWindow();
+	RenderWindow& GetWindow();
 };

@@ -9,8 +9,6 @@ protected:
 	Sound bgm;
 	UiObject* ment;
 
-	list<SpriteObject*> objs;
-	list<UiObject*> uis;
 
 public:
 	TitleScene(SceneManager& mgr);
