@@ -2,7 +2,7 @@
 #include "SceneManager.h"
 
 Scene::Scene(SceneManager& mgr)
-	: mgr(mgr),window(mgr.GetWindow())
+	: mgr(mgr)
 {
 	size = mgr.GetSize();
 }

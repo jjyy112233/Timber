@@ -21,7 +21,7 @@ class DualScene : public Scene
 public:
 	DualScene(SceneManager& mgr, Texture& cloths1, Texture& cloths2); //매니저에서 옷도 같이 주자
 	virtual void Init();
-	virtual void Draw();
+	virtual void Draw(RenderWindow& window);
 	virtual void Release();
 	virtual ~DualScene();
 	virtual void Update();

@@ -16,7 +16,7 @@ void TitleScene::Init()
 	//브금 틀어주기
 }
 
-void TitleScene::Draw()
+void TitleScene::Draw(RenderWindow& window)
 {
 	//for (auto obj : objs)
 	//{
@@ -34,8 +34,6 @@ TitleScene::~TitleScene()
 	//Release();
 }
 
-void TitleScene::Update()
+void TitleScene::Update(float dt)
 {
-	//GetKeyDown으로 눌리면
-	//mgr.MoveScene(SceneTypes::MENU);
 }

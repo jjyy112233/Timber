@@ -22,7 +22,7 @@ void DualScene::Init()
 {
 }
 
-void DualScene::Draw()
+void DualScene::Draw(RenderWindow& window)
 { 
 
 }

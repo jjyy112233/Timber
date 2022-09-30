@@ -3,7 +3,7 @@
 string ResourceManager::filePath("Resources.csv");
 ResourceManager::ResourceManager()
 {
-	LadAll();
+	LoadAll();
 }
 
 ResourceManager::~ResourceManager()
@@ -11,7 +11,7 @@ ResourceManager::~ResourceManager()
 	Release();
 }
 
-bool ResourceManager::LadAll()
+bool ResourceManager::LoadAll()
 {
 	Release();
 	rapidcsv::Document doc(filePath, rapidcsv::LabelParams(0, -1));
