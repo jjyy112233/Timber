@@ -23,15 +23,14 @@ class Scene
 protected:
 	SceneManager& mgr;
 	Vector2u size;
-	RenderWindow& window;
 	list<SpriteObject*> objs;
 	list<UiObject*> uis;
 public:
 	Scene(SceneManager& mgr);
 	virtual void Init() = 0;
-	virtual void Draw() = 0;
+	virtual void Draw(RenderWindow& window) = 0;
 	virtual void Release() = 0;
 	virtual ~Scene();
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 };
 

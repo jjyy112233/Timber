@@ -63,6 +63,14 @@ void SpriteObject::SetOrigin(Origins orgin)
 {
 	Utils::SetOrigin(sprite, orgin);
 }
+void SpriteObject::SetOrigin(Vector2f origins)
+{
+	sprite.setOrigin(origins);
+}
+Vector2f SpriteObject::GetOrigin()
+{
+	return sprite.getOrigin();
+}
 
 void SpriteObject::SetFlipX(bool flip)
 {

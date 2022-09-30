@@ -13,10 +13,10 @@ protected:
 public:
 	TitleScene(SceneManager& mgr);
 	virtual void Init();
-	virtual void Draw();
+	virtual void Draw(RenderWindow& window);
 	virtual void Release();
 	virtual ~TitleScene();
-	virtual void Update();
+	virtual void Update(float dt);
 };
 
 

@@ -8,11 +8,12 @@ class SceneManager
 {
 protected:
 	Vector2u size;
-	RenderWindow window;
 public:
 	SceneManager(Vector2u size);
-
+	map<SceneTypes,Scene*> scenes;
+	Vector2u GetSize();
+	void SceneInit();
+	void SceneUpdata(float dt);
+	void SceneDraw(RenderWindow& window);
 	void MoveScene(SceneTypes type, vector<int> sceneInfo = vector<int>());
-	const Vector2u GetSize() const;
-	RenderWindow& GetWindow();
 };

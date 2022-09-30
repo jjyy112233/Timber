@@ -33,7 +33,7 @@ void MenuScene::Init()
 
 }
 
-void MenuScene::Draw()
+void MenuScene::Draw(RenderWindow& window)
 {
 	for (auto obj : objs)
 	{
