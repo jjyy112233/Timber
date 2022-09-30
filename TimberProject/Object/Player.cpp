@@ -1,15 +1,16 @@
 #include "Player.h"
 #include "../ResourceManager.h"
+#include "../InputMgr.h"
 
 Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent)
 	: SpriteObject(tex),tex(tex), branchCurrent(branchCurrent),
 	rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
-	branchs(branchs), addScore(100), isAlive(true), side(Sides::Left),
+	branchs(branchs), addScore(100), isAlive(true), side(Sides::Right),
 	axe(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png"))
 {
+	ripSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
 	SetOrigin(Origins::BL);
 	axe.SetOrigin(Origins::BL);
-	ripSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
 }
 
 void Player::Set(Vector2f tree)
@@ -17,8 +18,13 @@ void Player::Set(Vector2f tree)
 	Texture treeTex = *ResourceManager::GetInstance()->GetTexture("graphics/tree.png");
 	Vector2u treeSize = treeTex.getSize();
 	center = tree;
-	SetPosition({ center.x + treeSize.x / 2 + 30 ,center.y });
-	axe.SetPosition({ GetPosition().x - 20, GetPosition().y - 10 });
+
+	SetOrigin(Origins::BL);
+	SetOrigin({ GetOrigin().x - 200 , GetOrigin().y });
+	SetPosition(center);
+	axe.SetOrigin(Origins::BL);
+	axe.SetOrigin({ axe.GetOrigin().x - 200 , axe.GetOrigin().y });
+	axe.SetPosition(center);
 }
 
 Sides Player::GetSide()
@@ -29,9 +35,8 @@ Sides Player::GetSide()
 void Player::Init()
 {
 	sprite.setTexture(tex,true);
-	SetOrigin(Origins::BL);
-
 	isAlive = true;
+
 	ripSound.stop();
 }
 
@@ -42,12 +47,21 @@ void Player::Release()
 void Player::Update(float dt)
 {
 	SpriteObject::Update(dt);
+	
+	if (isAlive)
+	{
+		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
+			isShowAxe = true;
+		else
+			isShowAxe = false;
+	}
 }
 
 void Player::Draw(RenderWindow& window)
 {
 	SpriteObject::Draw(window);
-	axe.Draw(window);
+	if(isShowAxe)
+		axe.Draw(window);
 }
 
 void Player::SetPosition(Vector2f pos)
@@ -67,7 +81,8 @@ void Player::Die()
 	isAlive = false;
 	sprite.setTexture(rip,true);
 	SetOrigin(Origins::BL);
-
+	SetOrigin({ GetOrigin().x - 200 , GetOrigin().y });
+	SetPosition(center);
 }
 
 Player::~Player()

@@ -18,8 +18,8 @@ protected:
 
 	SpriteObject* tree;
 	RectangleShape timerBar;
-	Text txtMessage;
-	Text texScore;
+	UiObject* txtMessage;
+	UiObject* txtScore;
 
 	int duration;
 	int time;

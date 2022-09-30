@@ -15,6 +15,7 @@ private:
 
     const int addScore; //늘어나는 점수
     bool isAlive; //살았는지 죽었는지
+    bool isShowAxe;
     
     vector<Branch*>& branchs; //브런치 주소(게임씬(single, dual 에서 가져옴)
     int& branchCurrent;

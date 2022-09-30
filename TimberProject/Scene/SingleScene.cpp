@@ -32,10 +32,6 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 	tree->SetOrigin(Origins::BC);
 	objs.push_back(tree);
 
-	auto bee = new ActiveObject(*ResourceManager::GetInstance()->GetTexture("graphics/bee.png"));
-	bee->Set({ 200,400 }, { 500,1000 }, { 2000,0 }, { -100,0 });
-	objs.push_back(bee);
-
 	for (auto go : objs)
 	{
 		go->Init();
@@ -47,6 +43,10 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 		objs.push_back(branches[i]);
 	}
 
+
+	auto bee = new ActiveObject(*ResourceManager::GetInstance()->GetTexture("graphics/bee.png"));
+	bee->Set({ 200,400 }, { 500,1000 }, { 2000,0 }, { -100,0 });
+	objs.push_back(bee);
 	float x = tree->GetPosition().x;
 	float y = 800;
 	float offset = branches[0]->GetSize().y;
@@ -63,15 +63,17 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 	branches[branchCurrent]->SetSide(playerPos);
 	player.Set(tree->GetPosition());
 
-	txtMessage.setString("PushEnter");
-	txtMessage.setCharacterSize(75);
-	txtMessage.setFillColor(Color::Magenta);
-	txtMessage.setPosition({ 500, 500 });
+	//txtMessage = new UiObject("PushEnter", {(float)size.x/2 , (float)size.y/2});
+	//txtMessage.setCharacterSize(75);
+	//txtMessage.setFillColor(Color::Magenta);
+	//txtMessage.setPosition({ 500, 500 });
 
 	Vector2f timerBarSize(400, 80);
 	timerBar.setSize(timerBarSize);
 	timerBar.setFillColor(Color::Red);
 	timerBar.setPosition(size.x * 0.5f - timerBarSize.x * 0.5f, size.y - 100);
+
+	//uis.push_back(txtMessage);
 }
 
 void SingleScene::Init()
@@ -96,7 +98,6 @@ void SingleScene::Init()
 	playerPos = playerPos == Sides::Left ? Sides::Right : Sides::Left;
 	branches[branchCurrent]->SetSide(playerPos);
 	player.Init();
-	//player.Set({ 500,500 });
 }
 
 void SingleScene::Draw(RenderWindow& window)
@@ -111,8 +112,8 @@ void SingleScene::Draw(RenderWindow& window)
 		ui->Draw(window);
 	}
 
-	window.draw(texScore);
-	window.draw(txtMessage);
+	//window.draw(texScore);
+	//window.draw(txtMessage);
 }
 
 void SingleScene::Release()
@@ -127,32 +128,46 @@ void SingleScene::Update(float dt)
 {
 
 	float deltatime = isPuase ? 0.f : dt;
-	for (auto obj : objs)
+	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
-		obj->Update(dt);
+		if (isGameOver)
+		{
+			Init();
+		}
+		else
+		{
+			isPuase = !isPuase;
+		}
 	}
-	player.Update(dt);
-	for (auto ui : uis)
-	{
-		ui->Update(dt);
-	}
-	if (!isPuase || !isGameOver)
+	if (!isPuase && !isGameOver)
 	{
 		if (InputMgr::GetKeyDown(Keyboard::Left) && !InputMgr::GetKey(Keyboard::Right))
 		{
+			UpdateBranch();
 			if (player.Chop(Sides::Left))
 			{
 				AddScore();
-				UpdateBranch();
+			}
+			else
+			{
+				isGameOver = true;
 			}
 		}
-		if (InputMgr::GetKeyDown(Keyboard::Right) && !InputMgr::GetKey(Keyboard::Right))
+		if (InputMgr::GetKeyDown(Keyboard::Right) && !InputMgr::GetKey(Keyboard::Left))
 		{
+			UpdateBranch();
 			if (player.Chop(Sides::Right))
 			{
 				AddScore();
-				UpdateBranch();
 			}
+			else
+			{
+				isGameOver = true;
+			}
+		}
+		if (InputMgr::GetKeyUp(Keyboard::Right) || InputMgr::GetKeyUp(Keyboard::Left))
+		{
+
 		}
 
 
@@ -166,8 +181,8 @@ void SingleScene::Update(float dt)
 		}
 		if (time == 0.f)
 		{
-			txtMessage.setString("TimeOver");
-			Utils::SetOrigin(txtMessage, Origins::MC);
+			//txtMessage.setString("TimeOver");
+			//Utils::SetOrigin(txtMessage, Origins::MC);
 			isPuase = true;
 		}
 		float normTime = time / duration;
@@ -178,16 +193,14 @@ void SingleScene::Update(float dt)
 		
 		timerBar.setPosition(size.x * 0.5f - timerSizeX * 0.5f, size.y - 100);
 	}
-	if (InputMgr::GetKeyDown(Keyboard::Enter))
+	for (auto obj : objs)
 	{
-		if (isGameOver)
-		{
-			Init();
-		}
-		else
-		{
-			isPuase != isPuase;
-		}
+		obj->Update(deltatime);
+	}
+	player.Update(dt);
+	for (auto ui : uis)
+	{
+		ui->Update(deltatime);
 	}
 }
 
@@ -207,5 +220,5 @@ void SingleScene::UpdateBranch()
 }
 void SingleScene::AddScore()
 {
-	texScore.setString("Score: " + to_string(100));
+	//texScore.setString("Score: " + to_string(100));
 }

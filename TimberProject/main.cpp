@@ -10,21 +10,22 @@ int main()
     mgr.scenes[SceneTypes::SINGLE] = new SingleScene(
         mgr, *ResourceManager::GetInstance()->GetTexture("graphics/player.png")
     );
-
-
     mgr.SceneInit();
+
     Clock clock;
     while (window.isOpen())
     {
         sf::Event event;
         Time dt = clock.restart();
+        InputMgr::ClearInput();
         while (window.pollEvent(event))
         {
+            InputMgr::UpdateInput(event);
             if (event.type == sf::Event::Closed)
                 window.close();
         }
 
-        //mgr.SceneUpdata(dt.asSeconds());
+        mgr.SceneUpdata(dt.asSeconds());
         mgr.SceneDraw(window);
 
         window.display();

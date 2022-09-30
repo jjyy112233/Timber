@@ -26,6 +26,8 @@ public:
 	Vector2f GetSize() const;
 	void Translate(Vector2f delta);
 	void SetOrigin(Origins orgin);
+	void SetOrigin(Vector2f origins);
+	Vector2f GetOrigin();
 
 	virtual void SetFlipX(bool flip);
 };
