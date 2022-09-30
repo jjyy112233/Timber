@@ -8,11 +8,10 @@ class UiObject
 {
 protected:
 	Text text;
-
 	UiObject(const UiObject& ref);
 	UiObject& operator=(const UiObject& ref);
 public:
-	UiObject(string str, Vector2f pos = Vector2f());
+	UiObject(string str,Font& font,int size,const Color& color, Vector2f pos = Vector2f());
 	virtual ~UiObject();
 
 	virtual void Init();
@@ -22,6 +21,8 @@ public:
 	virtual void SetPosition(Vector2f pos);
 
 	Vector2f GetPosition();
+	void SetString(string str);
+	void SetSize(int size);
 	Vector2f GetSize() const;
 	void Translate(Vector2f delta);
 	void SetOrigin(Origins orgin);

@@ -5,8 +5,11 @@ UiObject& UiObject::operator=(const UiObject& ref)
 	return *this;
 }
 
-UiObject::UiObject(string str, Vector2f pos)
+UiObject::UiObject(string str,Font& font,int size,const Color& color, Vector2f pos)
 {
+	text.setFont(font);
+	text.setCharacterSize(size);
+	text.setFillColor(color);
 	text.setString(str);
 	text.setPosition(pos);
 
@@ -39,6 +42,10 @@ void UiObject::Draw(RenderWindow& window)
 Vector2f UiObject::GetPosition()
 {
 	return text.getPosition();
+}
+void UiObject::SetString(string str)
+{
+	text.setString(str);
 }
 
 Vector2f UiObject::GetSize() const

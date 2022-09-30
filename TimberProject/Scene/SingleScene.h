@@ -22,9 +22,11 @@ protected:
 	UiObject* txtScore;
 
 	int duration;
-	int time;
+	int nowScore;
+	float time;
 	bool isPuase;
 	bool isGameOver;
+	bool isMentShow;
 
 public:
 	SingleScene(SceneManager& mgr, Texture& clotus); //매니저에서 옷도 같이 주자

@@ -15,6 +15,7 @@ private:
 
     const int addScore; //늘어나는 점수
     bool isAlive; //살았는지 죽었는지
+    bool isChopAxe;
     bool isShowAxe;
     
     vector<Branch*>& branchs; //브런치 주소(게임씬(single, dual 에서 가져옴)
@@ -30,6 +31,7 @@ public:
     virtual void Draw(RenderWindow& window);
     virtual void SetPosition(Vector2f pos);
     virtual void SetFlipX(bool flip);
+    void SetChopShow(bool state);
     void Die();
     virtual ~Player();
 
