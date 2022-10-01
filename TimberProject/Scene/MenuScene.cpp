@@ -5,7 +5,7 @@
 #include <string>
 
 MenuScene::MenuScene(SceneManager& mgr)
-	:Scene(mgr), nowSelect(Select::S_SINGLE)
+	:Scene(mgr), nowSelect(Select::S_SINGLE), SelectDown(false)
 {
 	background = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/background.png"),
 		{ (float)size.x / 2,(float)size.y / 2 });
@@ -18,13 +18,13 @@ MenuScene::MenuScene(SceneManager& mgr)
 	sment.setString("Single");
 	sment.setPosition(300, 200);
 	sment.setCharacterSize(150);
-	//Utils::SetOrigin(sment,Origins::TC);
 	sment.setFont(*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"));
+	Utils::SetOrigin(sment,Origins::BL);
 	dment.setString("Dual");
 	dment.setPosition(1260, 200);
 	dment.setCharacterSize(150);
-	//Utils::SetOrigin(dment, Origins::ML);
 	dment.setFont(*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"));
+	Utils::SetOrigin(dment, Origins::BL);
 
 	charactor.push_back(new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/Arrow.png")));
 	objs.push_back(charactor[0]);
@@ -43,8 +43,8 @@ MenuScene::MenuScene(SceneManager& mgr)
 	charactor[3]->SetOrigin(Origins::TR);
 	charactor[3]->SetPosition({ dment.getPosition().x + dment.getLocalBounds().width / 2, 500 });
 
-
-	
+	sment.setFillColor(Color::White);
+	dment.setFillColor(Color(125, 125, 125, 200));
 	
 	//배경 가져오기 .
 	//bgm 가져오기 .
@@ -58,7 +58,7 @@ MenuScene::MenuScene(SceneManager& mgr)
 
 void MenuScene::Init()
 {
-	
+	SelectDown = false;
 	//배경 
 	// objs와 uis 전부 위치 맞춰주기.
 	// select와 캐릭터 옷 선택한거는 기존대로 유지해준것도 나쁘지 않을지도
@@ -102,15 +102,33 @@ MenuScene::~MenuScene()
 void MenuScene::Update(float dt)
 {
 
-	if (!InputMgr::GetKeyDown(Keyboard::Left) && InputMgr::GetKeyDown(Keyboard::Right))
+	if (!SelectDown)
 	{
-		MoveSelect(Moves::Right);
+		if (!InputMgr::GetKey(Keyboard::Left) && InputMgr::GetKeyDown(Keyboard::Right))
+		{
+			MoveSelect(Moves::Right);
+		}
+
+		if (!InputMgr::GetKey(Keyboard::Right) && InputMgr::GetKeyDown(Keyboard::Left))
+		{
+			MoveSelect(Moves::Left);
+		}
+		if (!InputMgr::GetKeyDown(Keyboard::Up) && InputMgr::GetKeyDown(Keyboard::Down))
+		{
+			MoveSelect(Moves::Down);
+			SelectDown = true;
+		}
+	}
+	else
+	{
+		if (!InputMgr::GetKeyDown(Keyboard::Down) && InputMgr::GetKeyDown(Keyboard::Up))
+		{
+			SelectDown = false;
+			MoveSelect(Moves::Up);
+		}
 	}
 
-	if (!InputMgr::GetKeyDown(Keyboard::Right) && InputMgr::GetKeyDown(Keyboard::Left))
-	{
-		MoveSelect(Moves::Left);
-	}
+
 	//if (Select::S_SINGLE == nowSelect)
 	//{
 	//	if (!InputMgr::GetKeyDown(Keyboard::Left) && InputMgr::GetKeyDown(Keyboard::Right))
@@ -143,13 +161,24 @@ void MenuScene::MoveSelect(Moves move)
 {
 	selectsound.play();
 	charactor[0]->SetOrigin(Origins::MR);
-	charactor[0]->SetPosition(dment.getPosition());
-
+	if (move == Moves::Right)
+	{
+		charactor[0]->SetPosition(dment.getPosition());
+		sment.setFillColor(Color(125, 125, 125, 200));
+		dment.setFillColor(Color::White);
+	}
+	if(move == Moves::Left)
+	{
+		charactor[0]->SetPosition(sment.getPosition());
+		sment.setFillColor(Color::White);
+		dment.setFillColor(Color(125, 125, 125, 200));
+	}	
 }
 
 void MenuScene::ChangeClothes(Moves move)
 {
-	selectsound.play();
-
-	select.move(0.f, 0.f); 
+	// 현 위치가 Single 캐릭터 선택일떄 up->Single
+	// pos = charactor[0]->sment
+	// 현 위치가 Dual 캐릭터 선택일떄 up->Dual
+	// pos = charactor[0]->dment
 }
