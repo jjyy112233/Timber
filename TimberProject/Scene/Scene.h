@@ -12,10 +12,12 @@ using namespace std;
 class SceneManager;
 enum class SceneTypes
 {
+	None = -1,
 	TITLE,
 	MENU,
 	SINGLE,
 	DUAL,
+	Count,
 };
 
 class Scene

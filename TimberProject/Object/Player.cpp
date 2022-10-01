@@ -2,15 +2,17 @@
 #include "../ResourceManager.h"
 #include "../InputMgr.h"
 
-Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent)
-	: SpriteObject(tex),tex(tex), branchCurrent(branchCurrent),
+Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool& isPuase)
+	: SpriteObject(tex),tex(tex), branchCurrent(branchCurrent), isPuase(isPuase),
 	rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
-	branchs(branchs), addScore(100), isAlive(true), side(Sides::Right),
+	branchs(branchs), addScore(100), isAlive(false),  side(Sides::Right),
 	axe(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png"))
 {
 	ripSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
-	SetOrigin(Origins::BL);
-	axe.SetOrigin(Origins::BL);
+	SetOrigin(Origins::BC);
+	axe.SetOrigin(Origins::BC);
+	SetPosition(center);
+	axe.SetPosition(GetPosition());
 }
 
 void Player::Set(Vector2f tree)
@@ -19,12 +21,6 @@ void Player::Set(Vector2f tree)
 	Vector2u treeSize = treeTex.getSize();
 	center = tree;
 
-	SetOrigin(Origins::BL);
-	SetOrigin({ GetOrigin().x - 200 , GetOrigin().y });
-	SetPosition(center);
-	axe.SetOrigin(Origins::BL);
-	axe.SetOrigin({ axe.GetOrigin().x - 200 , axe.GetOrigin().y });
-	axe.SetPosition(center);
 }
 
 Sides Player::GetSide()
@@ -34,10 +30,16 @@ Sides Player::GetSide()
 
 void Player::Init()
 {
-	sprite.setTexture(tex,true);
 	isAlive = true;
+	sprite.setTexture(tex,true);
 
+	SetOrigin(Origins::BC);
+	axe.SetOrigin(Origins::BC);
+	SetPosition({ side == Sides::Left ? center.x - 300 : center.x + 300,center.y });
+	SetFlipX(side == Sides::Left ? true : false);
+	axe.SetPosition(GetPosition());
 	ripSound.stop();
+	isChopAxe = false;
 }
 
 void Player::Release()
@@ -48,19 +50,19 @@ void Player::Update(float dt)
 {
 	SpriteObject::Update(dt);
 	
-	if (isAlive)
+	if (isAlive && !isPuase)
 	{
 		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
-			isShowAxe = true;
+			isChopAxe = true;
 		else
-			isShowAxe = false;
+			isChopAxe = false;
 	}
 }
 
 void Player::Draw(RenderWindow& window)
 {
 	SpriteObject::Draw(window);
-	if(isShowAxe)
+	if(isChopAxe)
 		axe.Draw(window);
 }
 
@@ -80,9 +82,9 @@ void Player::Die()
 {
 	isAlive = false;
 	sprite.setTexture(rip,true);
-	SetOrigin(Origins::BL);
-	SetOrigin({ GetOrigin().x - 200 , GetOrigin().y });
-	SetPosition(center);
+	SetOrigin(Origins::BC);
+	SetFlipX(false);
+
 }
 
 Player::~Player()
@@ -94,6 +96,8 @@ bool Player::Chop(Sides moveSide)
 	side = moveSide;
 
 	SetFlipX(side == Sides::Left ? true : false);
+	SetPosition({ side == Sides::Left ? center.x -300: center.x + 300,center.y });
+	axe.SetPosition(GetPosition());
 
 	if (side == branchs[branchCurrent]->GetSide())
 	{

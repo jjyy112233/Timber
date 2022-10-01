@@ -8,9 +8,11 @@ class SceneManager
 {
 protected:
 	Vector2u size;
+	map<SceneTypes,Scene*> scenes;
+	SceneTypes nowScene;
 public:
 	SceneManager(Vector2u size);
-	map<SceneTypes,Scene*> scenes;
+	void AddScene(SceneTypes type, Scene* scene);
 	Vector2u GetSize();
 	void SceneInit();
 	void SceneUpdata(float dt);

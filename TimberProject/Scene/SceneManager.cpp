@@ -2,8 +2,13 @@
 #include "../ResourceManager.h"
 
 SceneManager::SceneManager(Vector2u size)
-    :size(size)
+    :size(size), nowScene(SceneTypes::TITLE)
 {
+}
+
+void SceneManager::AddScene(SceneTypes type, Scene* scene)
+{
+    scenes[type] = scene;
 }
 Vector2u SceneManager::GetSize()
 {
@@ -12,18 +17,18 @@ Vector2u SceneManager::GetSize()
 
 void SceneManager::SceneInit()
 {
-    scenes[SceneTypes::MENU]->Init();
-
+    scenes[nowScene]->Init();
 }
 void SceneManager::SceneUpdata(float dt)
 {
-    scenes[SceneTypes::MENU]->Update(dt);
+    scenes[nowScene]->Update(dt);
 }
 void SceneManager::SceneDraw(RenderWindow& window)
 {
-    scenes[SceneTypes::MENU]->Draw(window);
+    scenes[nowScene]->Draw(window);
 }
 void SceneManager::MoveScene(SceneTypes type, vector<int> sceneInfo)
 {
+    nowScene = type;
+    scenes[nowScene]->Init();
 }
-

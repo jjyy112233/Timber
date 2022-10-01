@@ -7,7 +7,8 @@ int main()
     VideoMode vm(1920, 1080);
     RenderWindow window(vm, "Timber!!", Style::Default);
     SceneManager mgr(window.getSize());
-    mgr.scenes[SceneTypes::MENU] = new MenuScene(mgr);
+    mgr.AddScene(SceneTypes::TITLE, new TitleScene(mgr));
+    mgr.AddScene(SceneTypes::SINGLE, new SingleScene(mgr, *ResourceManager::GetInstance()->GetTexture("graphics/player.png")));
     mgr.SceneInit();
 
     Clock clock;
