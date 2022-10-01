@@ -16,13 +16,13 @@ private:
     const int addScore; //늘어나는 점수
     bool isAlive; //살았는지 죽었는지
     bool isChopAxe;
-    bool isShowAxe;
+    bool& isPuase;
     
     vector<Branch*>& branchs; //브런치 주소(게임씬(single, dual 에서 가져옴)
     int& branchCurrent;
     Sound ripSound;
 public:
-    Player(Texture& tex, vector<Branch*>& branch, int& branchCurrent); //SpriteObject 생성자로 옷 입히고,
+    Player(Texture& tex, vector<Branch*>& branch, int& branchCurrent, bool& isPuase); //SpriteObject 생성자로 옷 입히고,
     void Set(Vector2f tree); //옷 변경,  나무를 기준으로 가운데 위치 잡고
     Sides GetSide();
     virtual void Init();
@@ -31,7 +31,6 @@ public:
     virtual void Draw(RenderWindow& window);
     virtual void SetPosition(Vector2f pos);
     virtual void SetFlipX(bool flip);
-    void SetChopShow(bool state);
     void Die();
     virtual ~Player();
 

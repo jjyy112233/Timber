@@ -2,10 +2,10 @@
 #include "../ResourceManager.h"
 #include "../InputMgr.h"
 
-Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent)
-	: SpriteObject(tex),tex(tex), branchCurrent(branchCurrent),
+Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool& isPuase)
+	: SpriteObject(tex),tex(tex), branchCurrent(branchCurrent), isPuase(isPuase),
 	rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
-	branchs(branchs), addScore(100), isAlive(false), isShowAxe(false), side(Sides::Right),
+	branchs(branchs), addScore(100), isAlive(false),  side(Sides::Right),
 	axe(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png"))
 {
 	ripSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
@@ -50,11 +50,11 @@ void Player::Update(float dt)
 {
 	SpriteObject::Update(dt);
 	
-	if (isAlive)
+	if (isAlive && !isPuase)
 	{
 		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
 			isChopAxe = true;
-		else if(isShowAxe)
+		else
 			isChopAxe = false;
 	}
 }
@@ -62,7 +62,7 @@ void Player::Update(float dt)
 void Player::Draw(RenderWindow& window)
 {
 	SpriteObject::Draw(window);
-	if(isChopAxe && isShowAxe)
+	if(isChopAxe)
 		axe.Draw(window);
 }
 
@@ -105,10 +105,6 @@ bool Player::Chop(Sides moveSide)
 		return false;
 	}
 	return true;
-}
-void Player::SetChopShow(bool state)
-{
-	isShowAxe = state;
 }
 
 int Player::GetScore()

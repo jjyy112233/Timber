@@ -6,7 +6,7 @@
 #include <string>
 
 SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
-	:Scene(mgr), branchCurrent(0), player(cloth, branches, branchCurrent), nowScore(0),
+	:Scene(mgr), branchCurrent(0), player(cloth, branches, branchCurrent, isPuase), nowScore(0),
 	duration(4), time(4), isPuase(true), isGameOver(false),isMentShow(true), branches(6), branchsArr(branches.size())
 {
 	background = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/background.png"),
@@ -135,18 +135,17 @@ void SingleScene::Update(float dt)
 			txtMessage->SetString("Push Enter");
 			isGameOver = false;
 			isPuase = true;
-			player.SetChopShow(false);
 		}
 		else
 		{
 			isPuase = !isPuase;
 			isMentShow = isPuase;
-			player.SetChopShow(!isPuase);
 		}
 	}
 
 	dt = isPuase ? 0.f : dt;
 	dt = isGameOver ? 0.f : dt;
+
 	if (!isPuase && !isGameOver)
 	{
 		if (InputMgr::GetKeyDown(Keyboard::Left) && !InputMgr::GetKey(Keyboard::Right) || 
@@ -175,7 +174,7 @@ void SingleScene::Update(float dt)
 			time = 0.f;
 			isGameOver = true;
 			isMentShow = true;
-			player.SetChopShow(false);
+			isPuase = true;
 			txtMessage->SetString("TimeOver");
 		}
 
