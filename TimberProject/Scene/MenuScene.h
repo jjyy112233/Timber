@@ -12,7 +12,10 @@ enum class Moves
 	Down,
 	Left,
 	Right,
-	None,
+	W,
+	A,
+	S,
+	D,
 };
 
 enum class Select
@@ -27,24 +30,24 @@ class SceneManager;
 class MenuScene : public Scene
 {
 protected:
-	Sprite background;
+	SpriteObject* background;
 	Sound bgm;
 	SoundBuffer selectsoundbuffer;
 	Sound selectsound;
-	Text ment;
+	Text sment;
+	Text dment;
 	Text select;
 	vector<SpriteObject*> charactor;
 	Select nowSelect;
 	vector<int> clothes;
 	Moves pos;
-
 public:
 	MenuScene(SceneManager& mgr);
 	virtual void Init();
 	virtual void Draw(RenderWindow& window);
 	virtual void Release();
 	virtual ~MenuScene();
-	virtual void Update();
+	virtual void Update(float dt);
 	void MoveSelect(Moves move);
 	void ChangeClothes(Moves move);
 };
