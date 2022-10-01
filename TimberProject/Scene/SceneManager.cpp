@@ -33,6 +33,6 @@ void SceneManager::MoveScene(SceneTypes type, vector<int> sceneInfo)
     scenes[nowScene]->Init();
     if (sceneInfo.empty())
     {
-        scenes[nowScene]->Set(sceneInfo);
+       // scenes[nowScene]->Set(sceneInfo);
     }
 }

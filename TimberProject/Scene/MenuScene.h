@@ -41,6 +41,7 @@ protected:
 	Select nowSelect;
 	vector<int> clothes;
 	Moves pos;
+	bool SelectDown;
 public:
 	MenuScene(SceneManager& mgr);
 	virtual void Init();
