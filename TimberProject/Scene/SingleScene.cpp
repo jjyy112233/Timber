@@ -72,6 +72,7 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 		90, Color::Red, { 10,10 });
 	txtScore->SetOrigin(Origins::TL);
 
+
 	Vector2f timerBarSize(400, 80);
 	timerBar.setSize(timerBarSize);
 	timerBar.setFillColor(Color::Red);

@@ -1,27 +1,49 @@
 #include "TitleScene.h"
 #include "SceneManager.h"
+#include "../ResourceManager.h"
+#include "../InputMgr.h"
+#include <SFML/Audio.hpp>
+#include "SceneManager.h"
 
-TitleScene::TitleScene(SceneManager& mgr)
+TitleScene::TitleScene(SceneManager& mgr) // 매번 생성이 아니라 생성해놓고 재활용할 것이기 때문에 빼야할 것이 있고, 넣어야 할 것이 있다. 그게 뭘까?
 	: Scene(mgr)
 {
-	//배경 생성, 텍스트 생성
-	//vector에 넣어주고
+	background = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/background.png"));
+	objs.push_back(background);
+
+	ment = new UiObject("Press Enter To Start!", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White);
+	uis.push_back(ment);
+
+	//리소스매니저::Get인스턴스()->Get폰트("경로");
+	//배경생성
+
+
 	//브금 가져오고
-	//Init()
+	// bgm.setBuffer(""); // 수정
 }
 
 void TitleScene::Init()
 {
-	//텍스트 위치 맞춰주고
-	//브금 틀어주기
+	ment->SetOrigin(Origins::MC);
+	ment->SetPosition(Vector2f{(float)1920/2, (float)1080/2});
+	// 게임씬이 바뀌고 그러면서 게이지바나 캐릭터의 위치들을 초기화해주는게 Init이다.
+	// 텍스트 위치 맞춰주고
+
+
+	// 브금 틀어주기
+	//bgm.play();
 }
 
 void TitleScene::Draw(RenderWindow& window)
 {
-	//for (auto obj : objs)
-	//{
-	//	obj->Draw(window);
-	//}
+	for (auto obj : objs)
+	{
+		obj->Draw(window);
+	}
+	for (auto ui : uis)
+	{
+		ui->Draw(window);
+	}
 }
 
 void TitleScene::Release()
@@ -31,9 +53,13 @@ void TitleScene::Release()
 
 TitleScene::~TitleScene()
 {
-	//Release();
+	Release();
 }
 
 void TitleScene::Update(float dt)
 {
+	if (InputMgr::GetKeyDown(Keyboard::Enter))
+	{
+		mgr.MoveScene(SceneTypes::SINGLE);
+	}
 }

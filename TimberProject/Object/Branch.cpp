@@ -25,6 +25,7 @@ void Branch::SetSide(Sides side)
 		break;
 	case Sides::Right:
 		sprite.setScale(1, 1);
+	case Sides::None:
 		break;
 	}
 }
