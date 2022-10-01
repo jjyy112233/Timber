@@ -149,6 +149,7 @@
     <ClCompile Include="Object\ActiveObject.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Object\Branch.cpp" />
+    <ClCompile Include="Object\EffectLog.cpp" />
     <ClCompile Include="Object\Player.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -161,15 +162,17 @@
     <ClCompile Include="Object\SpriteObject.cpp" />
     <ClCompile Include="Object\UiObject.cpp" />
     <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="LogsManager.cpp" />
+    <ClCompile Include="Object\LogsPool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Object\LogsPool.h" />
     <ClInclude Include="Object\ActiveObject.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="Object\Branch.h" />
     <ClInclude Include="Object\Player.h" />
     <ClInclude Include="rapidcsv.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Object\EffectLog.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\DualScene.h" />
     <ClInclude Include="Scene\MenuScene.h" />
@@ -180,7 +183,6 @@
     <ClInclude Include="Object\SpriteObject.h" />
     <ClInclude Include="Object\UiObject.h" />
     <ClInclude Include="Utils.h" />
-    <ClInclude Include="LogsManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

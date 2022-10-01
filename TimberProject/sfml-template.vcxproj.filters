@@ -60,7 +60,10 @@
     <ClCompile Include="Object\UiObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="LogsManager.cpp">
+    <ClCompile Include="Object\EffectLog.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LogsPool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,7 +116,10 @@
     <ClInclude Include="Object\UiObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LogsManager.h">
+    <ClInclude Include="Object\EffectLog.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LogsPool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

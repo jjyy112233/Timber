@@ -21,7 +21,7 @@ protected:
 	UiObject* txtMessage;
 	UiObject* txtScore;
 
-	int duration;
+	float duration;
 	int nowScore;
 	float time;
 	bool isPuase;
