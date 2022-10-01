@@ -18,12 +18,12 @@ MenuScene::MenuScene(SceneManager& mgr)
 	sment.setString("Single");
 	sment.setPosition(300, 200);
 	sment.setCharacterSize(150);
-	//Utils::SetOrigin(sment,Origins::TC);
+	Utils::SetOrigin(sment,Origins::TC);
 	sment.setFont(*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"));
 	dment.setString("Dual");
 	dment.setPosition(1260, 200);
 	dment.setCharacterSize(150);
-	//Utils::SetOrigin(dment, Origins::ML);
+	Utils::SetOrigin(dment, Origins::ML);
 	dment.setFont(*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"));
 
 	charactor.push_back(new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/Arrow.png")));

@@ -60,7 +60,7 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 	Sides playerPos = player.GetSide();
 	playerPos = playerPos == Sides::Left ? Sides::Right : Sides::Left;
 	branches[branchCurrent]->SetSide(playerPos);
-	player.Set(tree->GetPosition());
+	player.SetTreeCenter(tree->GetPosition());
 
 	txtMessage = new UiObject("PushEnter",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
