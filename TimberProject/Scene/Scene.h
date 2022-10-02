@@ -15,6 +15,8 @@ enum class SceneTypes
 	None = -1,
 	TITLE,
 	MENU,
+	SINGLESELECT,
+	DUALSELECT,
 	SINGLE,
 	DUAL,
 	Count,
