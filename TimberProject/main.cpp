@@ -9,7 +9,7 @@ int main()
     SceneManager mgr(window.getSize());
     mgr.AddScene(SceneTypes::TITLE, new TitleScene(mgr));
     mgr.AddScene(SceneTypes::MENU, new MenuScene(mgr));
-    mgr.AddScene(SceneTypes::SINGLE, new SingleScene(mgr, *ResourceManager::GetInstance()->GetTexture("graphics/player.png")));
+    mgr.AddScene(SceneTypes::SINGLE, new SingleScene(mgr, *ResourceManager::GetInstance()->GetTexture("graphics/player1.png")));
     mgr.SceneInit();
 
     Clock clock;
