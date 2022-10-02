@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\CharactorSelectScene.cpp" />
     <ClCompile Include="Object\ActiveObject.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="Object\Branch.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Object\LogsPool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\CharactorSelectScene.h" />
     <ClInclude Include="Object\LogsPool.h" />
     <ClInclude Include="Object\ActiveObject.h" />
     <ClInclude Include="InputMgr.h" />

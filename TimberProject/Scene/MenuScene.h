@@ -8,14 +8,8 @@ using namespace std;
 
 enum class Moves
 {
-	Up,
-	Down,
 	Left,
 	Right,
-	W,
-	A,
-	S,
-	D,
 };
 
 enum class Select
@@ -50,7 +44,6 @@ public:
 	virtual ~MenuScene();
 	virtual void Update(float dt);
 	void MoveSelect(Moves move);
-	void ChangeClothes(Moves move);
 };
 
 // Single, Dual, 캐릭터 선택
