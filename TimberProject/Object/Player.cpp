@@ -39,7 +39,9 @@ void Player::Init()
 	sprite.setTexture(tex,true);
 	SetOrigin(Origins::BC);
 	axe.SetOrigin(Origins::BC);
-	SetPosition({ side == Sides::Left ? center.x - 300 : center.x + 300,center.y });
+
+	float dis = branchs[0]->GetScale().x == 1 ? 300 : 200;
+	SetPosition({ side == Sides::Left ? center.x - dis : center.x + dis,center.y });
 	SetFlipX(side == Sides::Left ? true : false);
 	axe.SetPosition(GetPosition());
 	ripSound.stop();
@@ -100,7 +102,8 @@ bool Player::Chop(Sides moveSide)
 	side = moveSide;
 
 	SetFlipX(side == Sides::Left ? true : false);
-	SetPosition({ side == Sides::Left ? center.x -300: center.x + 300,center.y });
+	float dis = branchs[0]->GetScale().x == 1 ? 300 : 200;
+	SetPosition({ side == Sides::Left ? center.x - dis : center.x + dis,center.y });
 	axe.SetPosition(GetPosition());
 
 	if (side == branchs[branchCurrent]->GetSide())

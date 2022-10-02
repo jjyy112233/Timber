@@ -19,5 +19,5 @@ public:
 	void SceneInit();
 	void SceneUpdata(float dt);
 	void SceneDraw(RenderWindow& window);
-	void MoveScene(SceneTypes type, vector<int> sceneInfo = vector<int>());
+	void MoveScene(SceneTypes type, vector<string> sceneInfo = vector<string>());
 };

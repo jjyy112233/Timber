@@ -60,6 +60,6 @@ void TitleScene::Update(float dt)
 {
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
-		mgr.MoveScene(SceneTypes::SINGLESELECT);
+		mgr.MoveScene(SceneTypes::DUAL);
 	}
 }
