@@ -23,9 +23,11 @@ public:
 	Vector2f GetPosition();
 	void SetString(string str);
 	void SetSize(int size);
+	void SetScale(Vector2f scale);
 	Vector2f GetSize() const;
 	void Translate(Vector2f delta);
 	void SetOrigin(Origins orgin);
+	void SetFillColor(Color color);
 
 	virtual void SetFlipX(bool flip);
 };

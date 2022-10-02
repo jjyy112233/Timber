@@ -5,7 +5,7 @@
 #include <string>
 
 MenuScene::MenuScene(SceneManager& mgr)
-	:Scene(mgr), nowSelect(Select::S_SINGLE), SelectDown(false)
+	:Scene(mgr), nowSelect(Select::S_SINGLE)
 {
 	background = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/background.png"),
 		{ (float)size.x / 2,(float)size.y / 2 });
@@ -15,26 +15,24 @@ MenuScene::MenuScene(SceneManager& mgr)
 	//bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Elinia.wav"));
 	//bgm.play();
 
-	sment.setString("Single");
-	sment.setPosition(300, 200);
-	sment.setCharacterSize(150);
-	sment.setFont(*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"));
-	Utils::SetOrigin(sment,Origins::BL);
-	dment.setString("Dual");
-	dment.setPosition(1260, 200);
-	dment.setCharacterSize(150);
-	Utils::SetOrigin(dment, Origins::ML);
-	dment.setFont(*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"));
-	Utils::SetOrigin(dment, Origins::BL);
+	sment = new UiObject("Single", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 150, Color::White, { 300, 200 });
+	sment->SetOrigin(Origins::ML);
+	uis.push_back(sment);
+	dment = new UiObject("Dual", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 150, Color::White, { 1260, 200 });
+	dment->SetOrigin(Origins::ML);
+	uis.push_back(dment);
 
-	charactor.push_back(new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/Arrow.png")));
-	objs.push_back(charactor[0]);
-	charactor[0]->SetOrigin(Origins::MR);
-	charactor[0]->SetPosition(sment.getPosition());
+	arrow = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/Arrow.png"));
+	arrow->SetOrigin(Origins::MR);
+	arrow->SetPosition({ sment->GetPosition().x , sment->GetPosition().y + 20 });
+	objs.push_back(arrow);
+	dment->SetFillColor(Color(0, 0, 0, 200));
 	
-	sment.setFillColor(Color::White);
-	dment.setFillColor(Color(125, 125, 125, 200));
-	
+	select = new UiObject("PUSH ARROW KEY! NEXT SCENE IS SPACEBAR!",
+		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920/2, 1080/2 });
+	select->SetOrigin(Origins::MC);
+	uis.push_back(select);
+
 	//배경 가져오기 .
 	//bgm 가져오기 .
 	//ment 작성
@@ -47,7 +45,9 @@ MenuScene::MenuScene(SceneManager& mgr)
 
 void MenuScene::Init()
 {
-	SelectDown = false;
+	nowSelect = Select::S_SINGLE;
+	arrow->SetPosition({ sment->GetPosition().x , sment->GetPosition().y + 20 });
+	dment->SetFillColor(Color(0, 0, 0, 200));
 	//cselect = false;
 	//배경 
 	// objs와 uis 전부 위치 맞춰주기.
@@ -61,8 +61,6 @@ void MenuScene::Draw(RenderWindow& window)
 	{
 		obj->Draw(window);
 	}
-	window.draw(sment);
-	window.draw(dment);
 	for (auto ui : uis)
 	{
 		ui->Draw(window);
@@ -93,11 +91,13 @@ void MenuScene::Update(float dt)
 {
 	if (!InputMgr::GetKey(Keyboard::Left) && InputMgr::GetKeyDown(Keyboard::Right))
 	{
+		nowSelect = Select::S_DUAL;
 		MoveSelect(Moves::Right);
 	}
 
 	if (!InputMgr::GetKey(Keyboard::Right) && InputMgr::GetKeyDown(Keyboard::Left))
 	{
+		nowSelect = Select::S_SINGLE;
 		MoveSelect(Moves::Left);
 	}
 	//특정상황에서 키입력 받으면 Select 체크하는거 위치 옮기기(MoveSelect 호출)
@@ -107,19 +107,18 @@ void MenuScene::Update(float dt)
 void MenuScene::MoveSelect(Moves move)
 {
 	selectsound.play();
-	charactor[0]->SetOrigin(Origins::MR);
 
 	if (move == Moves::Right)
 	{
-		charactor[0]->SetPosition(dment.getPosition());
-		sment.setFillColor(Color(125, 125, 125, 200));
-		dment.setFillColor(Color::White);
+		sment->SetFillColor(Color(0, 0, 0, 200));
+		dment->SetFillColor(Color::White);
+		arrow->SetPosition({ dment->GetPosition().x , dment->GetPosition().y + 20 });
 	}
 	if(move == Moves::Left)
 	{
-		charactor[0]->SetPosition(sment.getPosition());
-		sment.setFillColor(Color::White);
-		dment.setFillColor(Color(125, 125, 125, 200));
+		sment->SetFillColor(Color::White);
+		dment->SetFillColor(Color(0, 0, 0, 200));
+		arrow->SetPosition({ sment->GetPosition().x , sment->GetPosition().y + 20 });
 	}
 }
 

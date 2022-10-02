@@ -48,6 +48,16 @@ void UiObject::SetString(string str)
 	text.setString(str);
 }
 
+void UiObject::SetSize(int size)
+{
+	text.setCharacterSize(size);
+}
+
+void UiObject::SetScale(Vector2f scale)
+{
+	text.setScale(scale);
+}
+
 Vector2f UiObject::GetSize() const
 {
 	FloatRect rect = text.getLocalBounds();
@@ -69,6 +79,11 @@ void UiObject::Translate(Vector2f delta)
 void UiObject::SetOrigin(Origins orgin)
 {
 	Utils::SetOrigin(text, orgin);
+}
+
+void UiObject::SetFillColor(Color color)
+{
+	text.setFillColor(color);
 }
 
 void UiObject::SetFlipX(bool flip)

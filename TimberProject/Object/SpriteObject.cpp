@@ -72,6 +72,11 @@ Vector2f SpriteObject::GetOrigin()
 	return sprite.getOrigin();
 }
 
+void SpriteObject::SetScale(Vector2f scale)
+{
+	sprite.setScale(scale);
+}
+
 void SpriteObject::SetFlipX(bool flip)
 {
 	Vector2f scale = sprite.getScale();

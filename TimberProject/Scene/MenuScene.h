@@ -16,8 +16,6 @@ enum class Select
 {
 	S_SINGLE,
 	S_DUAL,
-	S_CHARACTOR1,
-	S_CHARACTOR2,
 };
 
 class SceneManager;
@@ -26,16 +24,15 @@ class MenuScene : public Scene
 protected:
 	SpriteObject* background;
 	Sound bgm;
-	SoundBuffer selectsoundbuffer;
 	Sound selectsound;
-	Text sment;
-	Text dment;
-	Text select;
-	vector<SpriteObject*> charactor;
+	
+	UiObject* sment;
+	UiObject* dment;
+	UiObject* select;
+	SpriteObject* arrow;
+
+
 	Select nowSelect;
-	vector<int> clothes;
-	Moves pos;
-	bool SelectDown;
 public:
 	MenuScene(SceneManager& mgr);
 	virtual void Init();

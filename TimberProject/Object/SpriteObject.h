@@ -28,6 +28,7 @@ public:
 	void SetOrigin(Origins orgin);
 	void SetOrigin(Vector2f origins);
 	Vector2f GetOrigin();
+	void SetScale(Vector2f scale);
 
 	virtual void SetFlipX(bool flip);
 };
