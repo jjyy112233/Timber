@@ -1,22 +1,11 @@
+#include "TitleScene.h"
+#include "SceneManager.h"
 #include "SingleSelectScene.h"
 #include "MenuScene.h"
 #include "../ResourceManager.h"
 #include "../InputMgr.h"
 #include "Scene.h"
 #include <string>
-
-//charactor.push_back(new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/player3.png")));
-//objs.push_back(charactor[1]);
-//charactor[1]->SetOrigin(Origins::TC);
-//charactor[1]->SetPosition({ sment.getPosition().x + sment.getLocalBounds().width / 2, 500 });
-//charactor.push_back(new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/player4.png")));
-//objs.push_back(charactor[2]);
-//charactor[2]->SetOrigin(Origins::TL);
-//charactor[2]->SetPosition({ dment.getPosition().x + dment.getLocalBounds().width / 2, 500 });
-//charactor.push_back(new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/player5.png")));
-//objs.push_back(charactor[3]);
-//charactor[3]->SetOrigin(Origins::TR);
-//charactor[3]->SetPosition({ dment.getPosition().x + dment.getLocalBounds().width / 2, 500 });
 
 SingleSelectScene::SingleSelectScene(SceneManager& mgr)
 	:Scene(mgr)
@@ -26,14 +15,25 @@ SingleSelectScene::SingleSelectScene(SceneManager& mgr)
 	background->SetOrigin(Origins::MC);
 	objs.push_back(background);
 
-	charactor.push_back(new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/player1.png")));
-	objs.push_back(charactor[0]);
-	charactor[0]->SetOrigin(Origins::MC);
-	charactor[0]->SetPosition({ (float)size.x / 2, (float)size.y / 2 });
+	p = 0;	
 }
 
 void SingleSelectScene::Init()
 {
+	for (int i = 0; i < 5; ++i)
+	{
+		charactor.push_back(ResourceManager::GetInstance()->GetTexture(
+			"graphics/player" + to_string(i + 1) + ".png"));
+	}
+	player = new SpriteObject(*charactor[0], { (float)size.x / 2, (float)size.y / 2 });
+	player->SetScale({ 2, 2 });	
+
+	player->SetOrigin(Origins::MC);	
+
+	objs.push_back(player);
+
+	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Cuningcity.wav"));
+	bgm.play();
 }
 
 void SingleSelectScene::Draw(RenderWindow& window)
@@ -66,13 +66,34 @@ void SingleSelectScene::Update(float dt)
 	{
 		ChangeClothes(SingleMoves::Right);
 	}
-
 	if (!InputMgr::GetKey(Keyboard::Right) && InputMgr::GetKeyDown(Keyboard::Left))
 	{
 		ChangeClothes(SingleMoves::Left);
+	}
+
+	if (InputMgr::GetKeyDown(Keyboard::Enter))
+	{
+		mgr.MoveScene(SceneTypes::SINGLE);
+		bgm.stop();
+	}
+
+	if (InputMgr::GetKeyDown(Keyboard::Escape))
+	{
+		mgr.MoveScene(SceneTypes::MENU);
+		bgm.stop();
 	}
 }
 
 void SingleSelectScene::ChangeClothes(SingleMoves move)
 {
+	if (InputMgr::GetKeyDown(Keyboard::Right))
+	{
+		if (p == 4) return;
+		player->SetTexture(*charactor[++p]);
+	}
+	if (InputMgr::GetKeyDown(Keyboard::Left))
+	{
+		if (p == 0) return;
+		player->SetTexture(*charactor[--p]);
+	}
 }

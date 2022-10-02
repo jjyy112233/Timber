@@ -23,15 +23,11 @@ class MenuScene : public Scene
 {
 protected:
 	SpriteObject* background;
-	Sound bgm;
-	Sound selectsound;
-	
+	Sound bgm;	
 	UiObject* sment;
 	UiObject* dment;
 	UiObject* select;
 	SpriteObject* arrow;
-
-
 	Select nowSelect;
 public:
 	MenuScene(SceneManager& mgr);

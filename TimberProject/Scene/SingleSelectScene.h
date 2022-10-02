@@ -16,7 +16,7 @@ class SingleSelectScene : public Scene
 protected:
 	SpriteObject* background;
 	Sound bgm;
-	vector<SpriteObject*> charactor;
+	vector<Texture*> charactor;
 	SoundBuffer selectsoundbuffer;
 	Sound selectsound;
 	Text sment;
@@ -24,6 +24,8 @@ protected:
 	Text select;
 	vector<int> clothes;
 	SingleMoves pos;
+	SpriteObject* player;
+	int p;
 public:
 	SingleSelectScene(SceneManager& mgr);
 	virtual void Init();
