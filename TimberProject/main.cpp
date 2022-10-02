@@ -12,6 +12,7 @@ int main()
     mgr.AddScene(SceneTypes::SINGLESELECT, new SingleSelectScene(mgr));
     mgr.AddScene(SceneTypes::SINGLE, new SingleScene(mgr));
     mgr.AddScene(SceneTypes::DUAL, new DualScene(mgr));
+    mgr.AddScene(SceneTypes::DUALSELECT, new DualSelectScene(mgr));
     mgr.SceneInit();
 
     Clock clock;

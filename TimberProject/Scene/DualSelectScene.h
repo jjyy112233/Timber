@@ -6,17 +6,19 @@ enum class DualMoves
 {
 	Left,
 	Right,
+	A,
+	D,
 	Space,
 };
 
 class MenuScene;
 class SceneManager;
-class DualSelectScene : Scene
+class DualSelectScene : public Scene
 {
 protected:
 	SpriteObject* background;
 	Sound bgm;
-	vector<SpriteObject*> charactor;
+	vector<Texture*> charactor;
 	SoundBuffer selectsoundbuffer;
 	Sound selectsound;
 	Text sment;
@@ -24,6 +26,11 @@ protected:
 	Text select;
 	vector<int> clothes;
 	DualMoves pos;
+	SpriteObject* player1;
+	SpriteObject* player2;
+	int p1;
+	int p2;
+
 public:
 	DualSelectScene(SceneManager& mgr);
 	virtual void Init();

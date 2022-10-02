@@ -83,6 +83,11 @@ Vector2f SpriteObject::GetScale()
 	return sprite.getScale();
 }
 
+void SpriteObject::SetTexture(Texture& tex)
+{
+	sprite.setTexture(tex);
+}
+
 void SpriteObject::SetFlipX(bool flip)
 {
 	Vector2f scale = sprite.getScale();

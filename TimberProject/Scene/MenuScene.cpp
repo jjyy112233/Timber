@@ -1,4 +1,5 @@
 #include "MenuScene.h"
+#include "SceneManager.h"
 #include "../ResourceManager.h"
 #include "../InputMgr.h"
 #include "Scene.h"
@@ -11,9 +12,6 @@ MenuScene::MenuScene(SceneManager& mgr)
 		{ (float)size.x / 2,(float)size.y / 2 });
 	background->SetOrigin(Origins::MC);
 	objs.push_back(background);
-
-	//bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Elinia.wav"));
-	//bgm.play();
 
 	sment = new UiObject("Single", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 150, Color::White, { 300, 200 });
 	sment->SetOrigin(Origins::ML);
@@ -33,6 +31,8 @@ MenuScene::MenuScene(SceneManager& mgr)
 	select->SetOrigin(Origins::MC);
 	uis.push_back(select);
 
+
+
 	//배경 가져오기 .
 	//bgm 가져오기 .
 	//ment 작성
@@ -48,6 +48,10 @@ void MenuScene::Init()
 	nowSelect = Select::S_SINGLE;
 	arrow->SetPosition({ sment->GetPosition().x , sment->GetPosition().y + 20 });
 	dment->SetFillColor(Color(0, 0, 0, 200));
+
+	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Elinia.wav"));
+	bgm.play();
+
 	//cselect = false;
 	//배경 
 	// objs와 uis 전부 위치 맞춰주기.
@@ -100,14 +104,24 @@ void MenuScene::Update(float dt)
 		nowSelect = Select::S_SINGLE;
 		MoveSelect(Moves::Left);
 	}
+
+	if (InputMgr::GetKeyDown(Keyboard::Escape))
+	{
+		mgr.MoveScene(SceneTypes::TITLE);
+		bgm.stop();
+	}
+
+	if (InputMgr::GetKeyDown(Keyboard::Enter))
+	{
+		mgr.MoveScene(nowSelect == Select::S_DUAL ? SceneTypes::DUALSELECT : SceneTypes::SINGLESELECT);
+		bgm.stop();
+	}
 	//특정상황에서 키입력 받으면 Select 체크하는거 위치 옮기기(MoveSelect 호출)
 	//특정상황에서 키입력 받으면 ChangeClothes 호출
 }
 
 void MenuScene::MoveSelect(Moves move)
 {
-	selectsound.play();
-
 	if (move == Moves::Right)
 	{
 		sment->SetFillColor(Color(0, 0, 0, 200));
