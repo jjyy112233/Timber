@@ -3,6 +3,8 @@
 #include "MenuScene.h"
 #include "SingleScene.h"
 #include "DualScene.h"
+#include "SingleSelectScene.h"
+#include "DualSelectScene.h"
 
 class SceneManager
 {
