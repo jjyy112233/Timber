@@ -3,10 +3,10 @@
 #include "../InputMgr.h"
 
 Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool& isPuase)
-	: SpriteObject(tex),tex(tex), branchCurrent(branchCurrent), isPuase(isPuase),
-	rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
-	branchs(branchs), addScore(100), isAlive(false),  side(Sides::Right),
-	axe(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png"))
+	: SpriteObject(tex), tex(tex), rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
+	axe(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png")),
+	branchCurrent(branchCurrent), branchs(branchs), side(Sides::Right),
+	isPuase(isPuase), addScore(100), isAlive(false)
 {
 	ripSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
 	SetOrigin(Origins::BC);
@@ -15,12 +15,16 @@ Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool&
 	axe.SetPosition(GetPosition());
 }
 
-void Player::Set(Vector2f tree)
-{
-	Texture treeTex = *ResourceManager::GetInstance()->GetTexture("graphics/tree.png");
-	Vector2u treeSize = treeTex.getSize();
-	center = tree;
 
+void Player::SetTreeCenter(Vector2f tree)
+{
+	center = tree;
+}
+void Player::Set(Texture& tex)
+{
+	this->tex = tex;
+	sprite.setTexture(tex,true);
+	SetOrigin(Origins::BC);
 }
 
 Sides Player::GetSide()
@@ -31,8 +35,8 @@ Sides Player::GetSide()
 void Player::Init()
 {
 	isAlive = true;
-	sprite.setTexture(tex,true);
 
+	sprite.setTexture(tex,true);
 	SetOrigin(Origins::BC);
 	axe.SetOrigin(Origins::BC);
 	SetPosition({ side == Sides::Left ? center.x - 300 : center.x + 300,center.y });

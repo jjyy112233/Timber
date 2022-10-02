@@ -3,6 +3,7 @@
 #include "../Object/ActiveObject.h"
 #include "../ResourceManager.h"
 #include "../InputMgr.h"
+#include "../Object/LogsPool.h"
 #include <string>
 
 SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
@@ -60,7 +61,7 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 	Sides playerPos = player.GetSide();
 	playerPos = playerPos == Sides::Left ? Sides::Right : Sides::Left;
 	branches[branchCurrent]->SetSide(playerPos);
-	player.Set(tree->GetPosition());
+	player.SetTreeCenter(tree->GetPosition());
 
 	txtMessage = new UiObject("PushEnter",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
@@ -104,6 +105,7 @@ void SingleScene::Init()
 	branches[branchCurrent]->SetSide(playerPos);
 	nowScore = 0;
 	txtScore->SetString("Score: " + to_string(nowScore));
+	LogsPool::GetInstance()->Init();
 }
 
 void SingleScene::Draw(RenderWindow& window)
@@ -111,6 +113,7 @@ void SingleScene::Draw(RenderWindow& window)
 	for (auto obj : objs)
 	{
 		obj->Draw(window);
+		LogsPool::GetInstance()->Draw(window);
 	}
 	txtScore->Draw(window);
 	if (isMentShow)
@@ -158,6 +161,7 @@ void SingleScene::Update(float dt)
 				AddScore();
 				time += 0.2f;
 				time = min(time, 4.f);
+				LogsPool::GetInstance()->ShowLogEffect(player.GetSide(), tree->GetPosition());
 			}
 			else
 			{
@@ -183,7 +187,7 @@ void SingleScene::Update(float dt)
 		float normTime = time / duration;
 		float timerSizeX = 400 * normTime;
 		timerBar.setSize({ timerSizeX,  timerBar.getSize().y });
-		//timerBar.setPosition(size.x * 0.5f - timerSizeX * 0.5f, size.y - 100);
+		LogsPool::GetInstance()->Update(dt);
 	}
 	for (auto obj : objs)
 	{

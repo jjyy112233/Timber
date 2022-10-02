@@ -23,6 +23,7 @@ MenuScene::MenuScene(SceneManager& mgr)
 	dment.setString("Dual");
 	dment.setPosition(1260, 200);
 	dment.setCharacterSize(150);
+	Utils::SetOrigin(dment, Origins::ML);
 	dment.setFont(*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"));
 	Utils::SetOrigin(dment, Origins::BL);
 

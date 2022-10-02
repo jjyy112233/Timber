@@ -23,7 +23,8 @@ private:
     Sound ripSound;
 public:
     Player(Texture& tex, vector<Branch*>& branch, int& branchCurrent, bool& isPuase); //SpriteObject 생성자로 옷 입히고,
-    void Set(Vector2f tree); //옷 변경,  나무를 기준으로 가운데 위치 잡고
+    void SetTreeCenter(Vector2f tree); //나무를 기준으로 가운데 위치 잡고
+    void Set(Texture& tex); //옷 변경
     Sides GetSide();
     virtual void Init();
     virtual void Release();
