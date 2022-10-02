@@ -162,6 +162,7 @@ void MenuScene::MoveSelect(Moves move)
 {
 	selectsound.play();
 	charactor[0]->SetOrigin(Origins::MR);
+
 	if (move == Moves::Right)
 	{
 		charactor[0]->SetPosition(dment.getPosition());
