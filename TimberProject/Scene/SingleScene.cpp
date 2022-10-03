@@ -6,8 +6,8 @@
 #include "../Object/LogsPool.h"
 #include <string>
 
-SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
-	:Scene(mgr), branchCurrent(0), player(cloth, branches, branchCurrent, isPuase), nowScore(0),
+SingleScene::SingleScene(SceneManager& mgr)
+	:Scene(mgr), branchCurrent(0), nowScore(0),
 	duration(4), time(4), isPuase(true), isGameOver(false),isMentShow(true), branches(6), branchsArr(branches.size())
 {
 	background = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/background.png"),
@@ -40,28 +40,19 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 	{
 		go->Init();
 	}
-	for (int i = 0; i < branches.size(); ++i)
-	{
-		branches[i] = new Branch(*ResourceManager::GetInstance()->GetTexture("graphics/branch.png"), *tree);
-		branches[i]->SetSide((Sides)Utils::Range(0, 2));
-		objs.push_back(branches[i]);
-	}
-
 	float x = tree->GetPosition().x;
 	float y = 800;
-	float offset = branches[0]->GetSize().y;
+	float offset = ResourceManager::GetInstance()->GetTexture("graphics/branch.png")->getSize().y;
 	offset += 100;
 	for (int i = 0; i < branches.size(); ++i)
 	{
 		branchsArr[i] = Vector2f(x, y);
 		y -= offset;
+		branches[i] = new Branch(*ResourceManager::GetInstance()->GetTexture("graphics/branch.png"), *tree);
 		branches[i]->SetSide((Sides)Utils::Range(0, 2));
 		branches[i]->SetPosition(branchsArr[i]);
+		objs.push_back(branches[i]);
 	}
-	Sides playerPos = player.GetSide();
-	playerPos = playerPos == Sides::Left ? Sides::Right : Sides::Left;
-	branches[branchCurrent]->SetSide(playerPos);
-	player.SetTreeCenter(tree->GetPosition());
 
 	txtMessage = new UiObject("PushEnter",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
@@ -79,7 +70,9 @@ SingleScene::SingleScene(SceneManager& mgr, Texture& cloth)
 	timerBar.setFillColor(Color::Red);
 	timerBar.setPosition(size.x * 0.5f - timerBarSize.x * 0.5f, size.y - 100);
 
-	objs.push_back(&player);
+	player = new Player(*ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches, branchCurrent, isPuase);
+	player->SetTreeCenter(tree->GetPosition());
+	objs.push_back(player);
 	bee->Init();
 	objs.push_back(bee);
 	uis.push_back(txtMessage);
@@ -91,21 +84,18 @@ void SingleScene::Init()
 	isPuase = true;
 	isGameOver = false;
 	time = duration;
-	float x = branches[0]->GetPosition().x;
-	float y = 800;
-	float offset = branches[0]->GetSize().y;
-	offset += 100;
 
 	for (auto obj : objs)
 	{
 		obj->Init();
 	}
-	Sides playerPos = player.GetSide();
-	playerPos = playerPos == Sides::Left ? Sides::Right : Sides::Left;
-	branches[branchCurrent]->SetSide(playerPos);
 	nowScore = 0;
 	txtScore->SetString("Score: " + to_string(nowScore));
 	LogsPool::GetInstance()->Init();
+
+	Sides pos = player->GetSide();
+	pos = pos == Sides::Left ? Sides::Right : Sides::Left;
+	branches[branchCurrent]->SetSide(pos);
 }
 
 void SingleScene::Draw(RenderWindow& window)
@@ -120,7 +110,11 @@ void SingleScene::Draw(RenderWindow& window)
 		txtMessage->Draw(window);
 	window.draw(timerBar);
 }
-
+void SingleScene::Set(vector<string> cloth)
+{
+	//Å×½º¤Ñ
+	//player->Set(cloth[0]);
+}
 void SingleScene::Release()
 {
 }
@@ -156,12 +150,12 @@ void SingleScene::Update(float dt)
 			(InputMgr::GetKeyDown(Keyboard::Right) && !InputMgr::GetKey(Keyboard::Left)))
 		{
 			UpdateBranch();
-			if (player.Chop(InputMgr::GetKeyDown(Keyboard::Left) ? Sides::Left : Sides::Right))
+			if (player->Chop(InputMgr::GetKeyDown(Keyboard::Left) ? Sides::Left : Sides::Right))
 			{
 				AddScore();
 				time += 0.2f;
 				time = min(time, 4.f);
-				LogsPool::GetInstance()->ShowLogEffect(player.GetSide(), tree->GetPosition());
+				LogsPool::GetInstance()->ShowLogEffect(player->GetSide(), tree->GetPosition());
 			}
 			else
 			{
@@ -193,7 +187,6 @@ void SingleScene::Update(float dt)
 	{
 		obj->Update(dt);
 	}
-	player.Update(dt);
 	for (auto ui : uis)
 	{
 		ui->Update(dt);
@@ -216,6 +209,6 @@ void SingleScene::UpdateBranch()
 }
 void SingleScene::AddScore()
 {
-	nowScore += player.GetScore();
+	nowScore += player->GetScore();
 	txtScore->SetString("Score: " + to_string(nowScore));
 }

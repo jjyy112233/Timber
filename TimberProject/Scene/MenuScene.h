@@ -32,6 +32,7 @@ protected:
 public:
 	MenuScene(SceneManager& mgr);
 	virtual void Init();
+	virtual void Set(vector<string> cloths) {};
 	virtual void Draw(RenderWindow& window);
 	virtual void Release();
 	virtual ~MenuScene();

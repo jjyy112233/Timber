@@ -29,6 +29,7 @@ public:
 	void SetOrigin(Vector2f origins);
 	Vector2f GetOrigin();
 	void SetScale(Vector2f scale);
+	Vector2f GetScale();
 	void SetTexture(Texture& tex);
 
 	virtual void SetFlipX(bool flip);

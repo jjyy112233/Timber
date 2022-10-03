@@ -11,7 +11,7 @@ protected:
 	Sound timeOutSound;
 	Text ment;
 
-	Player player;
+	Player* player;
 	vector<Branch*> branches; //가지들은 오브젝트풀로, 가지가 사운드 가지고 있게 하자
 	int branchCurrent;
 	vector<Vector2f> branchsArr;
@@ -29,8 +29,9 @@ protected:
 	bool isMentShow;
 
 public:
-	SingleScene(SceneManager& mgr, Texture& clotus); //매니저에서 옷도 같이 주자
+	SingleScene(SceneManager& mgr); //매니저에서 옷도 같이 주자
 	virtual void Init();
+	virtual void Set(vector<string> cloths);
 	virtual void Draw(RenderWindow& window);
 	virtual void Release();
 	virtual ~SingleScene();

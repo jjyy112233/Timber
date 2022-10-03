@@ -43,7 +43,7 @@ Vector2f SpriteObject::GetPosition()
 
 Vector2f SpriteObject::GetSize() const
 {
-	FloatRect rect = sprite.getLocalBounds();
+	FloatRect rect = sprite.getGlobalBounds();
 	return Vector2f{ rect.width, rect.height };
 }
 
@@ -75,6 +75,12 @@ Vector2f SpriteObject::GetOrigin()
 void SpriteObject::SetScale(Vector2f scale)
 {
 	sprite.setScale(scale);
+	auto origins = sprite.getOrigin();
+}
+
+Vector2f SpriteObject::GetScale()
+{
+	return sprite.getScale();
 }
 
 void SpriteObject::SetTexture(Texture& tex)

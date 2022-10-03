@@ -34,6 +34,7 @@ public:
 	virtual void Init() = 0;
 	virtual void Draw(RenderWindow& window) = 0;
 	virtual void Release() = 0;
+	virtual void Set(vector<string> cloth) = 0;
 	virtual ~Scene();
 	virtual void Update(float dt) = 0;
 };
