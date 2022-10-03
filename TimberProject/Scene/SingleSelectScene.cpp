@@ -15,7 +15,14 @@ SingleSelectScene::SingleSelectScene(SceneManager& mgr)
 	background->SetOrigin(Origins::MC);
 	objs.push_back(background);
 
-	p = 0;	
+	p = 0;
+
+	selectSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
+
+	select = new UiObject("SELECT A CHARACTOR WHITH THE DIRECTION KEY",
+		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 /2, 1080 / 2 });
+	select->SetOrigin(Origins::MC);
+	uis.push_back(select);
 }
 
 void SingleSelectScene::Init()
@@ -44,6 +51,10 @@ void SingleSelectScene::Draw(RenderWindow& window)
 	}
 	window.draw(sment);
 	window.draw(dment);
+	for (auto ui : objs)
+	{
+		ui->Draw(window);
+	}
 }
 
 void SingleSelectScene::Release()
@@ -65,21 +76,25 @@ void SingleSelectScene::Update(float dt)
 	if (!InputMgr::GetKey(Keyboard::Left) && InputMgr::GetKeyDown(Keyboard::Right))
 	{
 		ChangeClothes(SingleMoves::Right);
+		selectSound.play();
 	}
 	if (!InputMgr::GetKey(Keyboard::Right) && InputMgr::GetKeyDown(Keyboard::Left))
 	{
 		ChangeClothes(SingleMoves::Left);
+		selectSound.play();
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
 		mgr.MoveScene(SceneTypes::SINGLE);
+		selectSound.play();
 		bgm.stop();
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape))
 	{
 		mgr.MoveScene(SceneTypes::MENU);
+		selectSound.play();
 		bgm.stop();
 	}
 }
