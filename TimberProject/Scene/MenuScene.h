@@ -24,6 +24,7 @@ class MenuScene : public Scene
 protected:
 	SpriteObject* background;
 	Sound bgm;	
+	Sound selectSound;
 	UiObject* sment;
 	UiObject* dment;
 	UiObject* select;

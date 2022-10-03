@@ -26,11 +26,12 @@ MenuScene::MenuScene(SceneManager& mgr)
 	objs.push_back(arrow);
 	dment->SetFillColor(Color(0, 0, 0, 200));
 	
-	select = new UiObject("PUSH ARROW KEY! NEXT SCENE IS SPACEBAR!",
+	select = new UiObject("PUSH ARROW KEY! NEXT SCENE IS ENTER!",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920/2, 1080/2 });
 	select->SetOrigin(Origins::MC);
 	uis.push_back(select);
 
+	selectSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
 
 
 	//배경 가져오기 .
@@ -97,23 +98,27 @@ void MenuScene::Update(float dt)
 	{
 		nowSelect = Select::S_DUAL;
 		MoveSelect(Moves::Right);
+		selectSound.play();
 	}
 
 	if (!InputMgr::GetKey(Keyboard::Right) && InputMgr::GetKeyDown(Keyboard::Left))
 	{
 		nowSelect = Select::S_SINGLE;
 		MoveSelect(Moves::Left);
+		selectSound.play();
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape))
 	{
 		mgr.MoveScene(SceneTypes::TITLE);
+		selectSound.play();
 		bgm.stop();
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
 		mgr.MoveScene(nowSelect == Select::S_DUAL ? SceneTypes::DUALSELECT : SceneTypes::SINGLESELECT);
+		selectSound.play();
 		bgm.stop();
 	}
 	//특정상황에서 키입력 받으면 Select 체크하는거 위치 옮기기(MoveSelect 호출)

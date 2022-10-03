@@ -16,12 +16,13 @@ class SingleSelectScene : public Scene
 protected:
 	SpriteObject* background;
 	Sound bgm;
+	Sound selectSound;
 	vector<Texture*> charactor;
 	SoundBuffer selectsoundbuffer;
 	Sound selectsound;
 	Text sment;
 	Text dment;
-	Text select;
+	UiObject* select;
 	vector<int> clothes;
 	SingleMoves pos;
 	SpriteObject* player;

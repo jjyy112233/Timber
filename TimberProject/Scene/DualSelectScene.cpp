@@ -17,6 +17,8 @@ DualSelectScene::DualSelectScene(SceneManager& mgr)
 
 	p1 = 0;
 	p2 = 0;
+
+	selectSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
 }
 
 void DualSelectScene::Init()
@@ -39,6 +41,11 @@ void DualSelectScene::Init()
 
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Perion.wav"));
 	bgm.play();
+
+	select = new UiObject("SELECT A CHARACTOR WHITH A,W KEY AND DIRECTION KEY",
+		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 /2 , 1080 * 0.33 });
+	select->SetOrigin(Origins::MC);
+	uis.push_back(select);
 }
 
 void DualSelectScene::Draw(RenderWindow& window)
@@ -49,6 +56,10 @@ void DualSelectScene::Draw(RenderWindow& window)
 	}
 	window.draw(sment);
 	window.draw(dment);
+	for (auto ui : uis)
+	{
+		ui->Draw(window);
+	}
 }
 
 void DualSelectScene::Release()
@@ -70,30 +81,36 @@ void DualSelectScene::Update(float dt)
 	if (!InputMgr::GetKey(Keyboard::A) && InputMgr::GetKeyDown(Keyboard::D))
 	{
 		ChangeClothes(DualMoves::D);
+		selectSound.play();
 	}
 	if (!InputMgr::GetKey(Keyboard::D) && InputMgr::GetKeyDown(Keyboard::A))
 	{
 		ChangeClothes(DualMoves::A);
+		selectSound.play();
 	}
 
 	if (!InputMgr::GetKey(Keyboard::Left) && InputMgr::GetKeyDown(Keyboard::Right))
 	{
 		ChangeClothes(DualMoves::Right);
+		selectSound.play();
 	}
 	if (!InputMgr::GetKey(Keyboard::Right) && InputMgr::GetKeyDown(Keyboard::Left))
 	{
 		ChangeClothes(DualMoves::Left);
+		selectSound.play();
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
 		mgr.MoveScene(SceneTypes::DUAL);
+		selectSound.play();
 		bgm.stop();
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape))
 	{
 		mgr.MoveScene(SceneTypes::MENU);
+		selectSound.play();
 		bgm.stop();
 	}
 }
