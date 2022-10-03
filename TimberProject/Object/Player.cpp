@@ -2,8 +2,8 @@
 #include "../ResourceManager.h"
 #include "../InputMgr.h"
 
-Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool& isPuase, bool is_1_player)
-	: SpriteObject(tex), tex(tex), rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
+Player::Player(Texture* tex, vector<Branch*>& branchs, int& branchCurrent, bool& isPuase, bool is_1_player)
+	: SpriteObject(*tex),tex(tex), rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
 	axe(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png")),
 	branchCurrent(branchCurrent), branchs(branchs), side(Sides::Right),
 	isPuase(isPuase), addScore(100), isAlive(false)
@@ -31,10 +31,10 @@ void Player::SetTreeCenter(Vector2f tree)
 {
 	center = tree;
 }
-void Player::Set(Texture& tex)
+void Player::Set(Texture* tex)
 {
 	this->tex = tex;
-	sprite.setTexture(tex,true);
+	sprite.setTexture(*tex,true);
 	SetOrigin(Origins::BC);
 }
 
@@ -47,7 +47,7 @@ void Player::Init()
 {
 	isAlive = true;
 
-	sprite.setTexture(tex,true);
+	sprite.setTexture(*tex,true);
 	SetOrigin(Origins::BC);
 	axe.SetOrigin(Origins::BC);
 

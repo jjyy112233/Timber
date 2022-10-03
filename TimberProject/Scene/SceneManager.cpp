@@ -27,7 +27,7 @@ void SceneManager::SceneDraw(RenderWindow& window)
 {
     scenes[nowScene]->Draw(window);
 }
-void SceneManager::MoveScene(SceneTypes type, vector<string> sceneInfo)
+void SceneManager::MoveScene(SceneTypes type, vector<Texture*> sceneInfo)
 {
     nowScene = type;
     scenes[nowScene]->Set(sceneInfo);

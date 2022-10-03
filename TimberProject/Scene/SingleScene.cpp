@@ -70,7 +70,7 @@ SingleScene::SingleScene(SceneManager& mgr)
 	timerBar.setFillColor(Color::Red);
 	timerBar.setPosition(size.x * 0.5f - timerBarSize.x * 0.5f, size.y - 100);
 
-	player = new Player(*ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches, branchCurrent, isPuase);
+	player = new Player(ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches, branchCurrent, isPuase);
 	player->SetTreeCenter(tree->GetPosition());
 	objs.push_back(player);
 	bee->Init();
@@ -110,10 +110,9 @@ void SingleScene::Draw(RenderWindow& window)
 		txtMessage->Draw(window);
 	window.draw(timerBar);
 }
-void SingleScene::Set(vector<string> cloth)
+void SingleScene::Set(vector<Texture*> cloth)
 {
-	//Å×½º¤Ñ
-	//player->Set(cloth[0]);
+	player->Set(cloth[0]);
 }
 void SingleScene::Release()
 {

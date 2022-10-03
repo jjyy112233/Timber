@@ -6,7 +6,7 @@
 class Player : public SpriteObject
 {
 private:
-    Texture& tex;
+    Texture* tex;
     Texture& rip;
     SpriteObject axe; //들고있는 도끼
     Sides side; // 플레이어 위치
@@ -24,9 +24,9 @@ private:
     Keyboard::Key left;
     Keyboard::Key right;
 public:
-    Player(Texture& tex, vector<Branch*>& branch, int& branchCurrent, bool& isPuase, bool is_1_player = false); //SpriteObject 생성자로 옷 입히고,
+    Player(Texture* tex, vector<Branch*>& branch, int& branchCurrent, bool& isPuase, bool is_1_player = false); //SpriteObject 생성자로 옷 입히고,
     void SetTreeCenter(Vector2f tree); //나무를 기준으로 가운데 위치 잡고
-    void Set(Texture& tex); //옷 변경
+    void Set(Texture* tex); //옷 변경
     Sides GetSide();
     virtual void Init();
     virtual void Release();

@@ -23,10 +23,6 @@ SingleSelectScene::SingleSelectScene(SceneManager& mgr)
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 / 2, 1080 * 0.33 });
 	select->SetOrigin(Origins::MC);
 	uis.push_back(select);
-}
-
-void SingleSelectScene::Init()
-{
 	for (int i = 0; i < 5; ++i)
 	{
 		charactor.push_back(ResourceManager::GetInstance()->GetTexture(
@@ -34,10 +30,13 @@ void SingleSelectScene::Init()
 	}
 	player = new SpriteObject(*charactor[0], { (float)size.x / 2, (float)size.y / 2 });
 	player->SetScale({ 2, 2 });	
-
 	player->SetOrigin(Origins::MC);	
 
 	objs.push_back(player);
+}
+
+void SingleSelectScene::Init()
+{
 
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Cuningcity.wav"));
 	bgm.play();
@@ -49,8 +48,6 @@ void SingleSelectScene::Draw(RenderWindow& window)
 	{
 		obj->Draw(window);
 	}
-	window.draw(sment);
-	window.draw(dment);
 	for (auto ui : uis)
 	{
 		ui->Draw(window);
@@ -86,16 +83,16 @@ void SingleSelectScene::Update(float dt)
 
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
-		mgr.MoveScene(SceneTypes::SINGLE);
 		selectSound.play();
 		bgm.stop();
+		mgr.MoveScene(SceneTypes::SINGLE, { charactor[p] });
 	}
 
 	if (InputMgr::GetKeyDown(Keyboard::Escape))
 	{
-		mgr.MoveScene(SceneTypes::MENU);
 		selectSound.play();
 		bgm.stop();
+		mgr.MoveScene(SceneTypes::MENU);
 	}
 }
 
@@ -105,10 +102,13 @@ void SingleSelectScene::ChangeClothes(SingleMoves move)
 	{
 		if (p == 4) return;
 		player->SetTexture(*charactor[++p]);
+		player->SetOrigin(Origins::MC);
 	}
 	if (InputMgr::GetKeyDown(Keyboard::Left))
 	{
 		if (p == 0) return;
+
 		player->SetTexture(*charactor[--p]);
+		player->SetOrigin(Origins::MC);
 	}
 }

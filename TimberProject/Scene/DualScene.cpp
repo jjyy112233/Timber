@@ -61,7 +61,7 @@ DualScene::DualScene(SceneManager& mgr)
 	branchCurrent.push_back(0);
 	for (int n = 0; n < 2; n++)
 	{
-		players.push_back(new Player(*ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches[n], branchCurrent[n], isPuase, n == 0));
+		players.push_back(new Player(ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches[n], branchCurrent[n], isPuase, n == 0));
 		players[n]->SetTreeCenter(trees[n]->GetPosition());
 		objs.push_back(players[n]);
 	}
@@ -125,11 +125,10 @@ void DualScene::Init()
 	LogsPool::GetInstance()->Init(0.6f);
 }
 
-void DualScene::Set(vector<string> cloths)
+void DualScene::Set(vector<Texture*> cloths)
 {
-	//Å×½º¤Ñ
-	//players[0]->Set(clock[0]);
-	//players[1]->Set(clock[1]);
+	players[0]->Set(cloths[0]);
+	players[1]->Set(cloths[1]);
 
 }
 void DualScene::Draw(RenderWindow& window)

@@ -35,7 +35,7 @@ protected:
 public:
 	DualSelectScene(SceneManager& mgr);
 	virtual void Init();
-	virtual void Set(vector<string> cloths) {};
+	virtual void Set(vector<Texture*> cloths) {};
 	virtual void Draw(RenderWindow& window);
 	virtual void Release();
 	virtual ~DualSelectScene();

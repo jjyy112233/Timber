@@ -19,11 +19,8 @@ DualSelectScene::DualSelectScene(SceneManager& mgr)
 	p2 = 0;
 
 	selectSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
-}
 
-void DualSelectScene::Init()
-{
-	for (int i = 0; i< 5; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		charactor.push_back(ResourceManager::GetInstance()->GetTexture(
 			"graphics/player" + to_string(i + 1) + ".png"));
@@ -38,6 +35,10 @@ void DualSelectScene::Init()
 
 	objs.push_back(player1);
 	objs.push_back(player2);
+}
+
+void DualSelectScene::Init()
+{
 
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Perion.wav"));
 	bgm.play();
@@ -102,7 +103,7 @@ void DualSelectScene::Update(float dt)
 
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
-		mgr.MoveScene(SceneTypes::DUAL);
+		mgr.MoveScene(SceneTypes::DUAL, {charactor[p1], charactor[p2]});
 		selectSound.play();
 		bgm.stop();
 	}

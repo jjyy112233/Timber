@@ -20,8 +20,6 @@ protected:
 	vector<Texture*> charactor;
 	SoundBuffer selectsoundbuffer;
 	Sound selectsound;
-	Text sment;
-	Text dment;
 	UiObject* select;
 	vector<int> clothes;
 	SingleMoves pos;
@@ -30,7 +28,7 @@ protected:
 public:
 	SingleSelectScene(SceneManager& mgr);
 	virtual void Init();
-	virtual void Set(vector<string> cloths) {};
+	virtual void Set(vector<Texture*> cloths) {};
 	virtual void Draw(RenderWindow& window);
 	virtual void Release();
 	virtual ~SingleSelectScene();
