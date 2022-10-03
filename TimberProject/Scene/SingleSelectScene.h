@@ -20,9 +20,8 @@ protected:
 	vector<Texture*> charactor;
 	SoundBuffer selectsoundbuffer;
 	Sound selectsound;
-	UiObject* select;
+	TextObject* select;
 	vector<int> clothes;
-	SingleMoves pos;
 	SpriteObject* player;
 	int p;
 public:

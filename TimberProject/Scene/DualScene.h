@@ -8,8 +8,9 @@ class DualScene : public Scene
 	SpriteObject* background;
 	Sound bgm;
 	Sound timeOutSound;
-	UiObject* txtMessage;
-	vector<UiObject*> txtScore;
+	Sound keySound;
+	TextObject* txtMessage;
+	vector<TextObject*> txtScore;
 
 	vector<SpriteObject*> trees;//트리 만들때 플레이어, 브런치 에게 트리 위치 주기
 	vector<vector<Branch*>> branches; //가지들은 오브젝트풀로, 가지가 사운드 가지고 있게 하자

@@ -10,8 +10,8 @@ TitleScene::TitleScene(SceneManager& mgr) // 매번 생성이 아니라 생성해놓고 재활�
 	background = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/background.png"));
 	objs.push_back(background);
 
-	ment = new UiObject("Press Enter To Start!", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White);
-	uis.push_back(ment);
+	ment = new TextObject("Press Enter To Start!", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White);
+	txts.push_back(ment);
 
 	//리소스매니저::Get인스턴스()->Get폰트("경로");
 	//배경생성
@@ -29,6 +29,7 @@ void TitleScene::Init()
 
 	
 	bgm.play();
+	bgm.setLoop(true);
 	// 게임씬이 바뀌고 그러면서 게이지바나 캐릭터의 위치들을 초기화해주는게 Init이다.
 	// 텍스트 위치 맞춰주고
 
@@ -43,7 +44,7 @@ void TitleScene::Draw(RenderWindow& window)
 	{
 		obj->Draw(window);
 	}
-	for (auto ui : uis)
+	for (auto ui : txts)
 	{
 		ui->Draw(window);
 	}

@@ -9,6 +9,7 @@ protected:
 	SpriteObject* background;
 	Sound bgm;
 	Sound timeOutSound;
+	Sound keySound;
 	Text ment;
 
 	Player* player;
@@ -18,8 +19,8 @@ protected:
 
 	SpriteObject* tree;
 	RectangleShape timerBar;
-	UiObject* txtMessage;
-	UiObject* txtScore;
+	TextObject* txtMessage;
+	TextObject* txtScore;
 
 	float duration;
 	int nowScore;

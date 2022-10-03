@@ -13,11 +13,11 @@ Scene::~Scene()
 	{
 		delete obj;
 	}
-	for (auto ui : uis)
+	for (auto ui : txts)
 	{
 		delete ui;
 	}
 
 	objs.clear();
-	uis.clear();
+	txts.clear();
 }

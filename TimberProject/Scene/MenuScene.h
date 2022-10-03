@@ -25,9 +25,9 @@ protected:
 	SpriteObject* background;
 	Sound bgm;	
 	Sound selectSound;
-	UiObject* sment;
-	UiObject* dment;
-	UiObject* select;
+	TextObject* sment;
+	TextObject* dment;
+	TextObject* select;
 	SpriteObject* arrow;
 	Select nowSelect;
 public:

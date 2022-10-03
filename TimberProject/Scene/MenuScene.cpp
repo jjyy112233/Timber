@@ -13,12 +13,12 @@ MenuScene::MenuScene(SceneManager& mgr)
 	background->SetOrigin(Origins::MC);
 	objs.push_back(background);
 
-	sment = new UiObject("Single", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 150, Color::White, { 300, 200 });
+	sment = new TextObject("Single", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 150, Color::White, { 300, 200 });
 	sment->SetOrigin(Origins::ML);
-	uis.push_back(sment);
-	dment = new UiObject("Dual", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 150, Color::White, { 1260, 200 });
+	txts.push_back(sment);
+	dment = new TextObject("Dual", *ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 150, Color::White, { 1260, 200 });
 	dment->SetOrigin(Origins::ML);
-	uis.push_back(dment);
+	txts.push_back(dment);
 
 	arrow = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/Arrow.png"));
 	arrow->SetOrigin(Origins::MR);
@@ -26,10 +26,10 @@ MenuScene::MenuScene(SceneManager& mgr)
 	objs.push_back(arrow);
 	dment->SetFillColor(Color(0, 0, 0, 200));
 	
-	select = new UiObject("PUSH ARROW KEY! NEXT SCENE IS ENTER!",
+	select = new TextObject("PUSH ARROW KEY! NEXT SCENE IS ENTER!",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920/2, 1080/2 });
 	select->SetOrigin(Origins::MC);
-	uis.push_back(select);
+	txts.push_back(select);
 
 	selectSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
 
@@ -53,6 +53,7 @@ void MenuScene::Init()
 
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Elinia.wav"));
 	bgm.play();
+	bgm.setLoop(true);
 
 	//cselect = false;
 	//¹è°æ 
@@ -67,7 +68,7 @@ void MenuScene::Draw(RenderWindow& window)
 	{
 		obj->Draw(window);
 	}
-	for (auto ui : uis)
+	for (auto ui : txts)
 	{
 		ui->Draw(window);
 	}
@@ -81,11 +82,11 @@ void MenuScene::Release()
 		delete it;
 	}
 	objs.clear();
-	for (auto it : uis)
+	for (auto it : txts)
 	{
 		delete it;
 	}
-	uis.clear();
+	txts.clear();
 }
 
 MenuScene::~MenuScene()

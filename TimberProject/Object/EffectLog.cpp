@@ -48,8 +48,9 @@ void EffectLog::Update(float dt)
 	angle += angularVelocity * dt;
 	sprite.setRotation(angle);
 
-	velocity += Gravity * dt;
-	Vector2f delta = velocity * dt;
+	float scale = GetScale().x;
+	velocity += Gravity  * dt;
+	Vector2f delta = velocity * scale * dt;
 	Translate(delta);
 }
 
