@@ -9,11 +9,16 @@
 class SceneManager
 {
 protected:
+	Texture tex;
+	Sprite loading;
+	Font font;
+	Text loadingText;
+
 	Vector2u size;
 	map<SceneTypes,Scene*> scenes;
 	SceneTypes nowScene;
 public:
-	SceneManager(Vector2u size);
+	SceneManager(Vector2u size, RenderWindow& window);
 	~SceneManager();
 	void AddScene(SceneTypes type, Scene* scene);
 	Vector2u GetSize();

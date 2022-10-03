@@ -61,6 +61,11 @@ TitleScene::~TitleScene()
 
 void TitleScene::Update(float dt)
 {
+	if (InputMgr::GetKeyDown(Keyboard::Escape))
+	{
+		bgm.stop();
+		exit(-1);
+	}
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
 		mgr.MoveScene(SceneTypes::MENU);

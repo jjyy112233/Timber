@@ -179,6 +179,7 @@ void DualScene::Update(float dt)
 {
 	if (InputMgr::GetKeyDown(Keyboard::Escape))
 	{
+		bgm.stop();
 		mgr.MoveScene(SceneTypes::DUALSELECT);
 		return;
 	}

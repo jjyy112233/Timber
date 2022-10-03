@@ -7,7 +7,9 @@ int main()
 {
     VideoMode vm(1920, 1080);
     RenderWindow window(vm, "Timber!!", Style::Default);
-    SceneManager mgr(window.getSize());
+
+
+    SceneManager mgr(window.getSize(), window);
     mgr.AddScene(SceneTypes::TITLE, new TitleScene(mgr));
     mgr.AddScene(SceneTypes::MENU, new MenuScene(mgr));
     mgr.AddScene(SceneTypes::SINGLESELECT, new SingleSelectScene(mgr));

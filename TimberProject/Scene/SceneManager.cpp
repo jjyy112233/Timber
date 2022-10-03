@@ -1,9 +1,24 @@
 #include "SceneManager.h"
 #include "../ResourceManager.h"
 
-SceneManager::SceneManager(Vector2u size)
+SceneManager::SceneManager(Vector2u size, RenderWindow& window)
     :size(size), nowScene(SceneTypes::TITLE)
 {
+    tex.loadFromFile("graphics/background.png");
+    font.loadFromFile("fonts/KOMIKAP_.ttf");
+
+    loading.setTexture(tex);
+    loadingText.setFont(font);
+
+    loadingText.setFillColor(Color::White);
+    loadingText.setString("Loading...");
+    loadingText.setCharacterSize(75);
+    loadingText.setOrigin({ loadingText.getLocalBounds().width * 0.5f ,loadingText.getLocalBounds().height * 0.5f });
+    loadingText.setPosition(Vector2f{ (float)size.x / 2,(float)size.y / 2 });
+
+    window.draw(loading);
+    window.draw(loadingText);
+    window.display();
 }
 SceneManager::~SceneManager()
 {
