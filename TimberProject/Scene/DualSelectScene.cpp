@@ -23,7 +23,7 @@ DualSelectScene::DualSelectScene(SceneManager& mgr)
 	for (int i = 0; i < 5; ++i)
 	{
 		charactor.push_back(ResourceManager::GetInstance()->GetTexture(
-			"graphics/player" + to_string(i + 1) + ".png"));
+			"graphics/player" + to_string(i + 1) + ".png")); 
 	}
 	player1 = new SpriteObject(*charactor[0], { (float)size.x * 0.33f, (float)size.y / 2 });
 	player2 = new SpriteObject(*charactor[0], { (float)size.x * 0.66f, (float)size.y / 2 });
