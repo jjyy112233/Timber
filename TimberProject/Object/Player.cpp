@@ -2,7 +2,7 @@
 #include "../ResourceManager.h"
 #include "../InputMgr.h"
 
-Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool& isPuase)
+Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool& isPuase, bool is_1_player)
 	: SpriteObject(tex), tex(tex), rip(*ResourceManager::GetInstance()->GetTexture("graphics/rip.png")),
 	axe(*ResourceManager::GetInstance()->GetTexture("graphics/axe.png")),
 	branchCurrent(branchCurrent), branchs(branchs), side(Sides::Right),
@@ -13,6 +13,17 @@ Player::Player(Texture& tex, vector<Branch*>& branchs, int& branchCurrent, bool&
 	axe.SetOrigin(Origins::BC);
 	SetPosition(center);
 	axe.SetPosition(GetPosition());
+
+	if (is_1_player)
+	{
+		left = Keyboard::A;
+		right = Keyboard::D;
+	}
+	else
+	{
+		left = Keyboard::Left;
+		right = Keyboard::Right;
+	}
 }
 
 
@@ -58,7 +69,7 @@ void Player::Update(float dt)
 	
 	if (isAlive && !isPuase)
 	{
-		if (InputMgr::GetKey(Keyboard::Left) || InputMgr::GetKey(Keyboard::Right))
+		if (InputMgr::GetKey(left) || InputMgr::GetKey(right))
 			isChopAxe = true;
 		else
 			isChopAxe = false;
@@ -117,4 +128,9 @@ bool Player::Chop(Sides moveSide)
 int Player::GetScore()
 {
 	return addScore;
+}
+
+vector<Keyboard::Key> Player::GetKeys()
+{
+	return { left, right };
 }

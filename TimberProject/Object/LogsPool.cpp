@@ -3,9 +3,9 @@
 #include "Branch.h"
 
 LogsPool::LogsPool() 
-	: texLog(*ResourceManager::GetInstance()->GetTexture("graphics/log.png")), position({0,0})
+	: texLog(*ResourceManager::GetInstance()->GetTexture("graphics/log.png")), position({0,0}), scale(1.f)
 {
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 40; ++i)
 	{
 		auto log = new EffectLog(texLog, 2.f);
 		unuseLogs.push_back(log);
@@ -16,8 +16,9 @@ LogsPool::~LogsPool()
 {
 	Release();
 }
-void LogsPool::Init()
+void LogsPool::Init(float scale)
 {
+	this->scale = scale;
 	while (!useLogs.empty())
 	{
 		auto log = useLogs.back();
@@ -43,7 +44,9 @@ void LogsPool::ShowLogEffect(Sides side, Vector2f(position))
 
 	log->SetPosition(position);
 	log->Fire(force, aForce);
+	log->SetScale({ scale ,scale });
 }
+
 void LogsPool::Update(float dt)
 {
 	auto it = useLogs.begin();

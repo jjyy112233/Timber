@@ -16,10 +16,7 @@ class DualScene : public Scene
 	vector<vector<Vector2f>> branchsArr;
 	vector<Player*> players;	//플렝이어 두개
 
-	vector<SpriteObject*> timer; //타이머 두개
-	UiObject* pushEnter;//두개
-	UiObject* gameOver;	//두개
-	UiObject* timeOut;	//두개
+	vector<RectangleShape> timerBar;
 
 	float duration;
 	vector<int> nowScore;
@@ -36,5 +33,7 @@ public:
 	virtual void Release();
 	virtual ~DualScene();
 	virtual void Update(float dt);
+	void AddScore(int i);
+	void UpdateBranch(int i);
 };
 

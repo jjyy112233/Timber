@@ -21,8 +21,10 @@ private:
     vector<Branch*>& branchs; //브런치 주소(게임씬(single, dual 에서 가져옴)
     int& branchCurrent;
     Sound ripSound;
+    Keyboard::Key left;
+    Keyboard::Key right;
 public:
-    Player(Texture& tex, vector<Branch*>& branch, int& branchCurrent, bool& isPuase); //SpriteObject 생성자로 옷 입히고,
+    Player(Texture& tex, vector<Branch*>& branch, int& branchCurrent, bool& isPuase, bool is_1_player = false); //SpriteObject 생성자로 옷 입히고,
     void SetTreeCenter(Vector2f tree); //나무를 기준으로 가운데 위치 잡고
     void Set(Texture& tex); //옷 변경
     Sides GetSide();
@@ -32,6 +34,7 @@ public:
     virtual void Draw(RenderWindow& window);
     virtual void SetPosition(Vector2f pos);
     virtual void SetFlipX(bool flip);
+    vector<Keyboard::Key> GetKeys();
     void Die();
     virtual ~Player();
 

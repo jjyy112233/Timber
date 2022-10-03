@@ -103,8 +103,8 @@ void SingleScene::Draw(RenderWindow& window)
 	for (auto obj : objs)
 	{
 		obj->Draw(window);
-		LogsPool::GetInstance()->Draw(window);
 	}
+	LogsPool::GetInstance()->Draw(window);
 	txtScore->Draw(window);
 	if (isMentShow)
 		txtMessage->Draw(window);
@@ -125,6 +125,11 @@ SingleScene::~SingleScene()
 
 void SingleScene::Update(float dt)
 {
+	if (InputMgr::GetKeyDown(Keyboard::Escape))
+	{
+		mgr.MoveScene(SceneTypes::SINGLESELECT);
+		return;
+	}
 	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
 		if (isGameOver)

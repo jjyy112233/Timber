@@ -3,6 +3,8 @@
 #include "../Object/ActiveObject.h"
 #include "../ResourceManager.h"
 #include "../Object/LogsPool.h"
+#include "../InputMgr.h"
+
 
 DualScene::DualScene(SceneManager& mgr)
 	:Scene(mgr), duration(4), isPuase(true), isGameOver(false), isMentShow(true)
@@ -24,24 +26,18 @@ DualScene::DualScene(SceneManager& mgr)
 	}
 
 	Texture& texTree = *ResourceManager::GetInstance()->GetTexture("graphics/tree.png");
-	trees.push_back(new SpriteObject(texTree));
-	trees.push_back(new SpriteObject(texTree));
-	trees[0]->SetScale({ 0.6f ,1.f });
-	trees[1]->SetScale({ 0.6f ,1.f });
-	trees[0]->SetPosition({ (float)size.x *0.3f, trees[0]->GetSize().y });
-	trees[1]->SetPosition({ (float)size.x *0.7f, trees[1]->GetSize().y });
-	trees[0]->SetOrigin(Origins::BC);
-	trees[1]->SetOrigin(Origins::BC);
-	objs.push_back(trees[0]);
-	objs.push_back(trees[1]);
-
-
-
-	branches.push_back(vector<Branch*>(6));
-	branchsArr.push_back(vector<Vector2f>(6));
-	branches.push_back(vector<Branch*>(6));
-	branchsArr.push_back(vector<Vector2f>(6));
-
+	
+	float tree_size[2] = {0.3f, 0.7f};
+	for (int n = 0; n < 2; n++)
+	{
+		trees.push_back(new SpriteObject(texTree));
+		trees[n]->SetScale({ 0.6f ,1.f });
+		trees[n]->SetPosition({ (float)size.x * tree_size[n], trees[n]->GetSize().y});
+		trees[n]->SetOrigin(Origins::BC);
+		objs.push_back(trees[n]);
+		branches.push_back(vector<Branch*>(6));
+		branchsArr.push_back(vector<Vector2f>(6));
+	}
 
 	for (int n = 0; n < 2; n++)
 	{
@@ -60,14 +56,15 @@ DualScene::DualScene(SceneManager& mgr)
 			objs.push_back(branches[n][i]);
 		}
 	}
+
 	branchCurrent.push_back(0);
 	branchCurrent.push_back(0);
-	players.push_back(new Player(*ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches[0], branchCurrent[0], isPuase));
-	players.push_back(new Player(*ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches[1], branchCurrent[1], isPuase));
-	players[0]->SetTreeCenter(trees[0]->GetPosition());
-	players[1]->SetTreeCenter(trees[1]->GetPosition());
-	objs.push_back(players[0]);
-	objs.push_back(players[1]);
+	for (int n = 0; n < 2; n++)
+	{
+		players.push_back(new Player(*ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches[n], branchCurrent[n], isPuase, n == 0));
+		players[n]->SetTreeCenter(trees[n]->GetPosition());
+		objs.push_back(players[n]);
+	}
 
 	auto bee = new ActiveObject(*ResourceManager::GetInstance()->GetTexture("graphics/bee.png"));
 	bee->Set({ 200,400 }, { 500,1000 }, { 2000,0 }, { -100,0 });
@@ -76,10 +73,6 @@ DualScene::DualScene(SceneManager& mgr)
 	{
 		go->Init();
 	}
-	nowScore.push_back(0);
-	nowScore.push_back(0);
-	time.push_back(duration);
-	time.push_back(duration);
 
 	txtMessage = new UiObject("PushEnter",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
@@ -96,10 +89,17 @@ DualScene::DualScene(SceneManager& mgr)
 	txtScore[0]->SetOrigin(Origins::TL);
 	txtScore[1]->SetOrigin(Origins::TR);
 
-	uis.push_back(txtMessage);
-	uis.push_back(txtScore[0]);
-	uis.push_back(txtScore[1]);
+	for (int n = 0; n < 2; n++)
+	{
+		nowScore.push_back(0);
+		time.push_back(duration);
+		timerBar.push_back(RectangleShape({ 400, 50 }));
+		timerBar[n].setFillColor(Color::Red);
+		timerBar[n].setPosition({ trees[n]->GetPosition().x - 200, trees[n]->GetPosition().y + 20 });
+		uis.push_back(txtScore[n]);
+	}
 
+	uis.push_back(txtMessage);
 }
 
 void DualScene::Init()
@@ -113,18 +113,16 @@ void DualScene::Init()
 	{
 		obj->Init();
 	}
-	nowScore[0] = 0;
-	nowScore[1] = 0;
-	txtScore[0]->SetString("Score: " + to_string(nowScore[0]));
-	txtScore[1]->SetString("Score: " + to_string(nowScore[1]));
-	LogsPool::GetInstance()->Init();
+	for (int n = 0; n < 2; n++)
+	{
+		nowScore[n] = 0;
+		txtScore[n]->SetString("Score: " + to_string(nowScore[n]));
+		Sides pos = players[n]->GetSide();
+		pos = pos == Sides::Left ? Sides::Right : Sides::Left;
+		branches[n][branchCurrent[n]]->SetSide(pos);
+	}
 
-	Sides pos = players[0]->GetSide();
-	pos = pos == Sides::Left ? Sides::Right : Sides::Left;
-	branches[0][branchCurrent[0]]->SetSide(pos);
-	pos = players[1]->GetSide();
-	pos = pos == Sides::Left ? Sides::Right : Sides::Left;
-	branches[1][branchCurrent[1]]->SetSide(pos);
+	LogsPool::GetInstance()->Init(0.6f);
 }
 
 void DualScene::Set(vector<string> cloths)
@@ -140,10 +138,15 @@ void DualScene::Draw(RenderWindow& window)
 	{
 		obj->Draw(window);
 	}
-	for (auto ui : uis)
-	{
-		ui->Draw(window);
-	}
+
+	LogsPool::GetInstance()->Draw(window);
+	txtScore[0]->Draw(window);
+	txtScore[1]->Draw(window);
+	txtScore[1]->SetOrigin(Origins::TR);
+	if (isMentShow)
+		txtMessage->Draw(window);
+	window.draw(timerBar[0]);
+	window.draw(timerBar[1]);
 }
 
 void DualScene::Release()
@@ -153,15 +156,107 @@ void DualScene::Release()
 DualScene::~DualScene()
 {
 }
+void DualScene::UpdateBranch(int pIdx)
+{
+	branchCurrent[pIdx] = (branchCurrent[pIdx] + 1) % branches[pIdx].size();
+
+	for (int i = 0; i < branches[pIdx].size(); ++i)
+	{
+		int index = (branchCurrent[pIdx] + i) % branches[pIdx].size();
+		branches[pIdx][index]->SetPosition(branchsArr[pIdx][i]);
+		if (i == branches[pIdx].size() - 1)
+		{
+			branches[pIdx][index]->SetSide((Sides)Utils::Range(0, 2));
+		}
+	}
+}
 
 void DualScene::Update(float dt)
 {
-	for (auto obj : objs)
+	if (InputMgr::GetKeyDown(Keyboard::Escape))
 	{
-		obj->Update(dt);
+		mgr.MoveScene(SceneTypes::DUALSELECT);
+		return;
 	}
-	for (auto ui : uis)
+	if (InputMgr::GetKeyDown(Keyboard::Enter))
 	{
-		ui->Update(dt);
+		if (isGameOver)
+		{
+			Init();
+			txtMessage->SetString("Push Enter");
+			isGameOver = false;
+			isPuase = true;
+		}
+		else
+		{
+			isPuase = !isPuase;
+			isMentShow = isPuase;
+		}
 	}
+
+	dt = isPuase ? 0.f : dt;
+	dt = isGameOver ? 0.f : dt;
+
+	if (!isPuase && !isGameOver)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			auto keys = players[i]->GetKeys();
+
+			if (InputMgr::GetKeyDown(keys[0]) && !InputMgr::GetKey(keys[1]) ||
+				(InputMgr::GetKeyDown(keys[1]) && !InputMgr::GetKey(keys[0])))
+			{
+				UpdateBranch(i);
+				if (players[i]->Chop(InputMgr::GetKeyDown(keys[0]) ? Sides::Left : Sides::Right))
+				{
+					AddScore(i);
+					time[i] += 0.2f;
+					time[i] = min(time[i], 4.f);
+					LogsPool::GetInstance()->ShowLogEffect(players[i]->GetSide(), trees[i]->GetPosition());
+				}
+				else
+				{
+					isGameOver = true;
+					isMentShow = true;
+					txtMessage->SetString("Game Over");
+				}
+			}
+			if (time[i] < 0.f)
+			{
+				if (!isPuase)
+				{
+					//timeOutSound.play();
+				}
+				time[i] = 0.f;
+				isGameOver = true;
+				isMentShow = true;
+				isPuase = true;
+				txtMessage->SetString("TimeOver");
+			}
+
+			time[i] -= dt;
+			float normTime = time[i] / duration;
+			float timerSizeX = 400 * normTime;
+			timerBar[i].setSize({ timerSizeX,  timerBar[i].getSize().y });
+			LogsPool::GetInstance()->Update(dt);
+		}
+		}
+
+	if (!isPuase && !isGameOver)
+	{
+		for (auto obj : objs)
+		{
+			obj->Update(dt);
+		}
+		for (auto ui : uis)
+		{
+			ui->Update(dt);
+
+		}
+	}
+}
+void DualScene::AddScore(int i)
+{
+	nowScore[i] += players[i]->GetScore();
+	txtScore[i]->SetString("Score: " + to_string(nowScore[i]));
 }
