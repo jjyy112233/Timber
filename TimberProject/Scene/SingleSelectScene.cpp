@@ -20,7 +20,7 @@ SingleSelectScene::SingleSelectScene(SceneManager& mgr)
 	selectSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
 
 	select = new UiObject("SELECT A CHARACTOR WHITH THE DIRECTION KEY",
-		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 /2, 1080 / 2 });
+		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 / 2, 1080 * 0.33 });
 	select->SetOrigin(Origins::MC);
 	uis.push_back(select);
 }
@@ -51,7 +51,7 @@ void SingleSelectScene::Draw(RenderWindow& window)
 	}
 	window.draw(sment);
 	window.draw(dment);
-	for (auto ui : objs)
+	for (auto ui : uis)
 	{
 		ui->Draw(window);
 	}

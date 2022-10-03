@@ -43,7 +43,7 @@ void DualSelectScene::Init()
 	bgm.play();
 
 	select = new UiObject("SELECT A CHARACTOR WHITH A,W KEY AND DIRECTION KEY",
-		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 /2, 1080 / 2 });
+		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 /2 , 1080 * 0.33 });
 	select->SetOrigin(Origins::MC);
 	uis.push_back(select);
 }
