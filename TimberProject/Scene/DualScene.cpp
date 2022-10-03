@@ -100,6 +100,9 @@ DualScene::DualScene(SceneManager& mgr)
 	}
 
 	uis.push_back(txtMessage);
+	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/gameSceneBgm.wav"));
+	timeOutSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
+	bgm.setLoop(true);
 }
 
 void DualScene::Init()
@@ -123,6 +126,8 @@ void DualScene::Init()
 	}
 
 	LogsPool::GetInstance()->Init(0.6f);
+	if (bgm.getStatus() == Sound::Status::Stopped)
+		bgm.play();
 }
 
 void DualScene::Set(vector<Texture*> cloths)
@@ -231,6 +236,7 @@ void DualScene::Update(float dt)
 				isMentShow = true;
 				isPuase = true;
 				txtMessage->SetString("TimeOver");
+				timeOutSound.play();
 			}
 
 			time[i] -= dt;

@@ -24,6 +24,7 @@ Player::Player(Texture* tex, vector<Branch*>& branchs, int& branchCurrent, bool&
 		left = Keyboard::Left;
 		right = Keyboard::Right;
 	}
+	ripSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
 }
 
 
@@ -97,6 +98,7 @@ void Player::SetFlipX(bool flip)
 
 void Player::Die()
 {
+	ripSound.play();
 	isAlive = false;
 	sprite.setTexture(rip,true);
 	SetOrigin(Origins::BC);

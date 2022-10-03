@@ -1,5 +1,6 @@
 ﻿#include "Scene/SceneManager.h"
 #include "ResourceManager.h"
+#include "Object/LogsPool.h"
 #include "InputMgr.h"
 
 int main()
@@ -33,6 +34,9 @@ int main()
 
         window.display();
     }
+
+    LogsPool::GetInstance()->~LogsPool();
+    ResourceManager::GetInstance()->~ResourceManager();
 
     return 0;
 }

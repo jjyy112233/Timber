@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteObject.h"
+#include "SFML/Audio.hpp"
 class EffectLog : public SpriteObject
 {
 private:
@@ -9,6 +10,7 @@ private:
 	float timer;
 
 	bool active;
+	Sound chopSound;
 
 public:
 	static const Vector2f Gravity; //public Static const는 대문자로 하는 

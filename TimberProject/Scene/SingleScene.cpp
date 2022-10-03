@@ -77,6 +77,9 @@ SingleScene::SingleScene(SceneManager& mgr)
 	objs.push_back(bee);
 	uis.push_back(txtMessage);
 	uis.push_back(txtScore);
+	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/gameSceneBgm.wav"));
+	timeOutSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
+	bgm.setLoop(true);
 }
 
 void SingleScene::Init()
@@ -96,6 +99,9 @@ void SingleScene::Init()
 	Sides pos = player->GetSide();
 	pos = pos == Sides::Left ? Sides::Right : Sides::Left;
 	branches[branchCurrent]->SetSide(pos);
+
+	if(bgm.getStatus() == Sound::Status::Stopped)
+		bgm.play();
 }
 
 void SingleScene::Draw(RenderWindow& window)
@@ -126,6 +132,7 @@ void SingleScene::Update(float dt)
 {
 	if (InputMgr::GetKeyDown(Keyboard::Escape))
 	{
+		bgm.stop();
 		mgr.MoveScene(SceneTypes::SINGLESELECT);
 		return;
 	}
@@ -179,6 +186,7 @@ void SingleScene::Update(float dt)
 			isMentShow = true;
 			isPuase = true;
 			txtMessage->SetString("TimeOver");
+			timeOutSound.play();
 		}
 
 		time -= dt;

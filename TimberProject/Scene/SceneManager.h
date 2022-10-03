@@ -14,6 +14,7 @@ protected:
 	SceneTypes nowScene;
 public:
 	SceneManager(Vector2u size);
+	~SceneManager();
 	void AddScene(SceneTypes type, Scene* scene);
 	Vector2u GetSize();
 	void SceneInit();

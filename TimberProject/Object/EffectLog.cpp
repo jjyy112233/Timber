@@ -1,4 +1,5 @@
 #include "EffectLog.h"
+#include "../ResourceManager.h"
 
 const Vector2f EffectLog::Gravity = Vector2f(0.f, 2000.f);
 
@@ -6,6 +7,7 @@ EffectLog::EffectLog(Texture& tex, float duration)
 	:SpriteObject(tex), duration(duration), active(true), angularVelocity(0), timer(0)
 {
 	SetOrigin(Origins::MC);
+	chopSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/chop.wav"));
 }
 
 EffectLog::~EffectLog()
@@ -18,6 +20,7 @@ void EffectLog::Fire(const Vector2f v, float av)
 	timer = 0;
 	velocity = v;
 	angularVelocity = av;
+	chopSound.play();
 }
 
 void EffectLog::Init()

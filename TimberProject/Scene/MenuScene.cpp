@@ -47,6 +47,7 @@ MenuScene::MenuScene(SceneManager& mgr)
 void MenuScene::Init()
 {
 	nowSelect = Select::S_SINGLE;
+	MoveSelect(Moves::Left);
 	arrow->SetPosition({ sment->GetPosition().x , sment->GetPosition().y + 20 });
 	dment->SetFillColor(Color(0, 0, 0, 200));
 

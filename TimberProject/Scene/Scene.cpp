@@ -9,4 +9,15 @@ Scene::Scene(SceneManager& mgr)
 
 Scene::~Scene()
 {
+	for (auto obj : objs)
+	{
+		delete obj;
+	}
+	for (auto ui : uis)
+	{
+		delete ui;
+	}
+
+	objs.clear();
+	uis.clear();
 }

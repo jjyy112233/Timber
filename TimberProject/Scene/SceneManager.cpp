@@ -5,6 +5,13 @@ SceneManager::SceneManager(Vector2u size)
     :size(size), nowScene(SceneTypes::TITLE)
 {
 }
+SceneManager::~SceneManager()
+{
+    for (auto scene : scenes)
+    {
+        delete scene.second;
+    }
+}
 
 void SceneManager::AddScene(SceneTypes type, Scene* scene)
 {

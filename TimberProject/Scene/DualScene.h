@@ -7,6 +7,7 @@ class DualScene : public Scene
 {
 	SpriteObject* background;
 	Sound bgm;
+	Sound timeOutSound;
 	UiObject* txtMessage;
 	vector<UiObject*> txtScore;
 
