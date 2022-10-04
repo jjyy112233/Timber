@@ -44,7 +44,7 @@ void DualSelectScene::Init()
 	bgm.play();
 	bgm.setLoop(true);
 
-	select = new TextObject("SELECT A CHARACTOR WHITH A,W KEY AND DIRECTION KEY",
+	select = new TextObject("SELECT A CHARACTOR \n WHITH A,W KEY AND DIRECTION KEY",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { (float)1920 /2.f , (float)1080 * 0.33f });
 	select->SetOrigin(Origins::MC);
 	txts.push_back(select);
