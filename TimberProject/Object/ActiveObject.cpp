@@ -1,7 +1,7 @@
 #include "ActiveObject.h"
 
 ActiveObject::ActiveObject(Texture& tex, Vector2f pos)
-	:SpriteObject(tex, pos)
+	:SpriteObject(tex, pos), speed(0)
 {
 	//Init();
 }
@@ -13,14 +13,9 @@ ActiveObject::~ActiveObject()
 
 void ActiveObject::Init()
 {
-	speed = (rand() % (speedRange.y - speedRange.x)) + speedRange.x;
-	//direction.x = -1;
-	//startPos.x = 1919;
-	//startPos.y = (rand() % 780) + 1;
-	//endPos.x = -150;
-	//endPos.y = startPos.y;
-	startPos.y = ((rand() % (yRange.y = yRange.x)) + yRange.x);
-	endPos.y = startPos.y;
+	speed = (float)(rand() % (speedRange.y - speedRange.x)) + speedRange.x;
+	startPos.y = (float)((rand() % (yRange.y - yRange.x)) + yRange.x);
+	endPos.y = (float)startPos.y;
 	SetPosition(startPos);
 }
 

@@ -43,7 +43,7 @@ DualScene::DualScene(SceneManager& mgr)
 	{
 		float x = trees[n]->GetPosition().x;
 		float y = 800;
-		float offset = ResourceManager::GetInstance()->GetTexture("graphics/branch.png")->getSize().y;
+		float offset = (float)ResourceManager::GetInstance()->GetTexture("graphics/branch.png")->getSize().y;
 		offset += 100;
 		for (int i = 0; i < branches[n].size(); ++i)
 		{
@@ -67,23 +67,23 @@ DualScene::DualScene(SceneManager& mgr)
 	}
 
 	auto bee = new ActiveObject(*ResourceManager::GetInstance()->GetTexture("graphics/bee.png"));
-	bee->Set({ 200,400 }, { 500,1000 }, { 2000,0 }, { -100,0 });
-
+	bee->Set({ 100,200 }, { 300,800 }, { 2000,0 }, { -100,0 });
+	objs.push_back(bee);
 	for (auto go : objs)
 	{
 		go->Init();
 	}
 
-	txtMessage = new UiObject("PushEnter",
+	txtMessage = new TextObject("PushEnter",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
 		75, Color::White, { (float)size.x / 2 , (float)size.y / 2 });
 	txtMessage->SetOrigin(Origins::MC);
 
-	txtScore.push_back(new UiObject("Score : 0",
+	txtScore.push_back(new TextObject("Score : 0",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
 		90, Color::Red, { 10,10 }));
 
-	txtScore.push_back(new UiObject("Score : 0",
+	txtScore.push_back(new TextObject("Score : 0",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
 		90, Color::Red, {(float)size.x-30,10 }));
 	txtScore[0]->SetOrigin(Origins::TL);
@@ -96,13 +96,14 @@ DualScene::DualScene(SceneManager& mgr)
 		timerBar.push_back(RectangleShape({ 400, 50 }));
 		timerBar[n].setFillColor(Color::Red);
 		timerBar[n].setPosition({ trees[n]->GetPosition().x - 200, trees[n]->GetPosition().y + 20 });
-		uis.push_back(txtScore[n]);
+		txts.push_back(txtScore[n]);
 	}
 
-	uis.push_back(txtMessage);
+	txts.push_back(txtMessage);
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/gameSceneBgm.wav"));
 	timeOutSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
 	bgm.setLoop(true);
+	keySound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
 }
 
 void DualScene::Init()
@@ -127,7 +128,10 @@ void DualScene::Init()
 
 	LogsPool::GetInstance()->Init(0.6f);
 	if (bgm.getStatus() == Sound::Status::Stopped)
+	{
 		bgm.play();
+		bgm.setLoop(true);
+	}
 }
 
 void DualScene::Set(vector<Texture*> cloths)
@@ -191,11 +195,13 @@ void DualScene::Update(float dt)
 			txtMessage->SetString("Push Enter");
 			isGameOver = false;
 			isPuase = true;
+			keySound.play();
 		}
 		else
 		{
 			isPuase = !isPuase;
 			isMentShow = isPuase;
+			keySound.play();
 		}
 	}
 
@@ -254,7 +260,7 @@ void DualScene::Update(float dt)
 		{
 			obj->Update(dt);
 		}
-		for (auto ui : uis)
+		for (auto ui : txts)
 		{
 			ui->Update(dt);
 

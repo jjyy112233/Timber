@@ -24,9 +24,8 @@ protected:
 	Sound selectsound;
 	Text sment;
 	Text dment;
-	UiObject* select;
+	TextObject* select;
 	vector<int> clothes;
-	DualMoves pos;
 	SpriteObject* player1;
 	SpriteObject* player2;
 	int p1;

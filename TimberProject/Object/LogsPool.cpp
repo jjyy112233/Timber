@@ -37,10 +37,10 @@ void LogsPool::ShowLogEffect(Sides side, Vector2f(position))
 	useLogs.push_back(log);
 	Vector2f force;
 
-	force.x = side == Sides::Left ? 1500 : -1500;
+	force.x = side == Sides::Left ? 1500.f : -1500.f;
 	force.y = -1500;
 
-	float aForce = side == Sides::Left ? 360 * 5 : -360 * 5;
+	float aForce = side == Sides::Left ? 360.f * 5 : -360.f * 5;
 
 	log->SetPosition(position);
 	log->Fire(force, aForce);

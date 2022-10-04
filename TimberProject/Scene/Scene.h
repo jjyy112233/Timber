@@ -2,9 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "../Object/SpriteObject.h"
-#include "../Object/UiObject.h"
+#include "../Object/TextObject.h"
 #include <list>
-//#include "../UiObject.h"
+//#include "../TextObject.h"
 
 using namespace sf;
 using namespace std;
@@ -28,7 +28,7 @@ protected:
 	SceneManager& mgr;
 	Vector2u size;
 	list<SpriteObject*> objs;
-	list<UiObject*> uis;
+	list<TextObject*> txts;
 public:
 	Scene(SceneManager& mgr);
 	virtual void Init() = 0;

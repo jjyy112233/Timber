@@ -52,7 +52,7 @@ void Player::Init()
 	SetOrigin(Origins::BC);
 	axe.SetOrigin(Origins::BC);
 
-	float dis = abs(branchs[0]->GetScale().x ) == 1 ? 300 : 200;
+	float dis = abs(branchs[0]->GetScale().x ) == 1 ? 300.f : 200.f;
 	SetPosition({ side == Sides::Left ? center.x - dis : center.x + dis,center.y });
 	SetFlipX(side == Sides::Left ? true : false);
 	axe.SetPosition(GetPosition());
@@ -115,7 +115,7 @@ bool Player::Chop(Sides moveSide)
 	side = moveSide;
 
 	SetFlipX(side == Sides::Left ? true : false);
-	float dis = abs(branchs[0]->GetScale().x) == 1 ? 300 : 200;
+	float dis = abs(branchs[0]->GetScale().x) == 1 ? 300.f : 200.f;
 	SetPosition({ side == Sides::Left ? center.x - dis : center.x + dis,center.y });
 	axe.SetPosition(GetPosition());
 

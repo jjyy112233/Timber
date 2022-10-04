@@ -4,15 +4,15 @@
 
 using namespace sf;
 using namespace std;
-class UiObject
+class TextObject
 {
 protected:
 	Text text;
-	UiObject(const UiObject& ref);
-	UiObject& operator=(const UiObject& ref);
+	TextObject(const TextObject& ref);
+	TextObject& operator=(const TextObject& ref);
 public:
-	UiObject(string str,Font& font,int size,const Color& color, Vector2f pos = Vector2f());
-	virtual ~UiObject();
+	TextObject(string str,Font& font,int size,const Color& color, Vector2f pos = Vector2f());
+	virtual ~TextObject();
 
 	virtual void Init();
 	virtual void Release();

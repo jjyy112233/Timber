@@ -8,10 +8,10 @@
 #include <string>
 
 DualSelectScene::DualSelectScene(SceneManager& mgr)
-	:Scene(mgr)
+	:Scene(mgr), select(nullptr), player1(nullptr), player2(nullptr)
 {
 	background = new SpriteObject(*ResourceManager::GetInstance()->GetTexture("graphics/background.png"),
-		{ (float)size.x / 2,(float)size.y / 2 });
+		{(float)size.x / 2, (float)size.y / 2 });
 	background->SetOrigin(Origins::MC);
 	objs.push_back(background);
 
@@ -42,11 +42,12 @@ void DualSelectScene::Init()
 
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Perion.wav"));
 	bgm.play();
+	bgm.setLoop(true);
 
-	select = new UiObject("SELECT A CHARACTOR WHITH A,W KEY AND DIRECTION KEY",
-		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 /2 , 1080 * 0.33 });
+	select = new TextObject("SELECT A CHARACTOR WHITH A,W KEY AND DIRECTION KEY",
+		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { (float)1920 /2.f , (float)1080 * 0.33f });
 	select->SetOrigin(Origins::MC);
-	uis.push_back(select);
+	txts.push_back(select);
 }
 
 void DualSelectScene::Draw(RenderWindow& window)
@@ -57,7 +58,7 @@ void DualSelectScene::Draw(RenderWindow& window)
 	}
 	window.draw(sment);
 	window.draw(dment);
-	for (auto ui : uis)
+	for (auto ui : txts)
 	{
 		ui->Draw(window);
 	}

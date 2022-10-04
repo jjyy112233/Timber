@@ -7,7 +7,7 @@ class TitleScene : public Scene //
 protected:
 	SpriteObject* background;
 	Sound bgm;
-	UiObject* ment;
+	TextObject* ment;
 
 
 public:

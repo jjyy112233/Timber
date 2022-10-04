@@ -19,10 +19,10 @@ SingleSelectScene::SingleSelectScene(SceneManager& mgr)
 
 	selectSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
 
-	select = new UiObject("SELECT A CHARACTOR WHITH THE DIRECTION KEY",
-		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920 / 2, 1080 * 0.33 });
+	select = new TextObject("SELECT A CHARACTOR WHITH THE DIRECTION KEY",
+		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"), 75, Color::White, { 1920.f / 2.f, 1080.f * 0.33f });
 	select->SetOrigin(Origins::MC);
-	uis.push_back(select);
+	txts.push_back(select);
 	for (int i = 0; i < 5; ++i)
 	{
 		charactor.push_back(ResourceManager::GetInstance()->GetTexture(
@@ -40,6 +40,7 @@ void SingleSelectScene::Init()
 
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Cuningcity.wav"));
 	bgm.play();
+	bgm.setLoop(true);
 }
 
 void SingleSelectScene::Draw(RenderWindow& window)
@@ -48,7 +49,7 @@ void SingleSelectScene::Draw(RenderWindow& window)
 	{
 		obj->Draw(window);
 	}
-	for (auto ui : uis)
+	for (auto ui : txts)
 	{
 		ui->Draw(window);
 	}

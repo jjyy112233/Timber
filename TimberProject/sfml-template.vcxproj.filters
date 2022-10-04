@@ -57,7 +57,7 @@
     <ClCompile Include="InputMgr.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\UiObject.cpp">
+    <ClCompile Include="Object\TextObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\EffectLog.cpp">
@@ -119,7 +119,7 @@
     <ClInclude Include="SingleTon.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\UiObject.h">
+    <ClInclude Include="Object\TextObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\EffectLog.h">

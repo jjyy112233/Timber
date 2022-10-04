@@ -34,7 +34,7 @@ SingleScene::SingleScene(SceneManager& mgr)
 	objs.push_back(tree);
 
 	auto bee = new ActiveObject(*ResourceManager::GetInstance()->GetTexture("graphics/bee.png"));
-	bee->Set({ 200,400 }, { 500,1000 }, { 2000,0 }, { -100,0 });
+	bee->Set({ 100,200 }, { 300,800 }, { 2000,0 }, { -100,0 });
 
 	for (auto go : objs)
 	{
@@ -42,7 +42,7 @@ SingleScene::SingleScene(SceneManager& mgr)
 	}
 	float x = tree->GetPosition().x;
 	float y = 800;
-	float offset = ResourceManager::GetInstance()->GetTexture("graphics/branch.png")->getSize().y;
+	float offset = (float)ResourceManager::GetInstance()->GetTexture("graphics/branch.png")->getSize().y;
 	offset += 100;
 	for (int i = 0; i < branches.size(); ++i)
 	{
@@ -54,12 +54,12 @@ SingleScene::SingleScene(SceneManager& mgr)
 		objs.push_back(branches[i]);
 	}
 
-	txtMessage = new UiObject("PushEnter",
+	txtMessage = new TextObject("PushEnter",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
 		75, Color::White, { (float)size.x / 2 , (float)size.y / 2 });
 	txtMessage->SetOrigin(Origins::MC);
 
-	txtScore = new UiObject("Score : 0",
+	txtScore = new TextObject("Score : 0",
 		*ResourceManager::GetInstance()->GetFont("fonts/KOMIKAP_.ttf"),
 		90, Color::Red, { 10,10 });
 	txtScore->SetOrigin(Origins::TL);
@@ -68,18 +68,19 @@ SingleScene::SingleScene(SceneManager& mgr)
 	Vector2f timerBarSize(400, 80);
 	timerBar.setSize(timerBarSize);
 	timerBar.setFillColor(Color::Red);
-	timerBar.setPosition(size.x * 0.5f - timerBarSize.x * 0.5f, size.y - 100);
+	timerBar.setPosition((float)size.x * 0.5f - timerBarSize.x * 0.5f, (float)size.y - 100);
 
 	player = new Player(ResourceManager::GetInstance()->GetTexture("graphics/player1.png"), branches, branchCurrent, isPuase);
 	player->SetTreeCenter(tree->GetPosition());
 	objs.push_back(player);
 	bee->Init();
 	objs.push_back(bee);
-	uis.push_back(txtMessage);
-	uis.push_back(txtScore);
+	txts.push_back(txtMessage);
+	txts.push_back(txtScore);
 	bgm.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/gameSceneBgm.wav"));
 	timeOutSound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/death.wav"));
 	bgm.setLoop(true);
+	keySound.setBuffer(*ResourceManager::GetInstance()->GetSoundBuffer("sound/Select.wav"));
 }
 
 void SingleScene::Init()
@@ -144,11 +145,13 @@ void SingleScene::Update(float dt)
 			txtMessage->SetString("Push Enter");
 			isGameOver = false;
 			isPuase = true;
+			keySound.play();
 		}
 		else
 		{
 			isPuase = !isPuase;
 			isMentShow = isPuase;
+			keySound.play();
 		}
 	}
 
@@ -199,7 +202,7 @@ void SingleScene::Update(float dt)
 	{
 		obj->Update(dt);
 	}
-	for (auto ui : uis)
+	for (auto ui : txts)
 	{
 		ui->Update(dt);
 	}
