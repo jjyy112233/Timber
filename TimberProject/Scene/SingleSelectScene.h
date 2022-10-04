@@ -34,4 +34,3 @@ public:
 	virtual void Update(float dt);
 	void ChangeClothes(SingleMoves move);
 };
-
